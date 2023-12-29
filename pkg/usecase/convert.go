@@ -16,14 +16,31 @@ func Convert(repos repository.Repos, filename string) error {
 		return fmt.Errorf("failed to open file.")
 	}
 
-	originalimage, err := converter.Decode(original)
+	originalimage, imageType, err := converter.Decode(original)
 	if err != nil {
 		return fmt.Errorf("failed to decode. %s", err.Error())
 	}
 	resized := converter.Resize(originalimage)
-	out, err := converter.EncodePng(&resized)
 
-	if err := readwrite.Write("out.png", out); err != nil {
+	var out []byte
+	var outputfilename string
+	if imageType == service.TypePng {
+		out, err = converter.EncodePng(&resized)
+		if err != nil {
+			return fmt.Errorf("failed to encode png file.")
+		}
+		outputfilename = "out.png"
+	} else if imageType == service.TypeJpeg {
+		out, err = converter.EncodeJpeg(&resized)
+		if err != nil {
+			return fmt.Errorf("failed to encode jpeg file.")
+		}
+		outputfilename = "out.jpg"
+	} else {
+		return fmt.Errorf("failed to judge file type.")
+	}
+
+	if err := readwrite.Write(outputfilename, out); err != nil {
 		return fmt.Errorf("failed to create out file.")
 	}
 
