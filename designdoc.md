@@ -15,3 +15,13 @@
 ## Links
 - https://zenn.dev/buyselltech/articles/202304091000
 - https://text.baldanders.info/golang/resize-image/
+
+## Memo
+```bash
+# install gcloud cli
+brew install --cask google-cloud-sdk
+which gcloud
+gcloud auth login
+gcloud config set project <project-id>
+gcloud functions list
+```
