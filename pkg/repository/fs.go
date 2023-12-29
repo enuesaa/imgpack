@@ -10,12 +10,12 @@ type FsRepositoryInterface interface {
 	IsExist(path string) bool
 	IsDir(path string) (bool, error)
 	CreateDir(path string) error
-	Create(path string) (io.Writer, error)
+	Create(path string, body []byte) error
 	HomeDir() (string, error)
 	WorkDir() (string, error)
 	Remove(path string) error
 	ListFiles(path string) ([]string, error)
-	Open(path string) (io.Reader, error)
+	Read(path string) ([]byte, error)
 }
 type FsRepository struct{}
 
@@ -38,8 +38,16 @@ func (repo *FsRepository) CreateDir(path string) error {
 	return os.MkdirAll(path, os.ModePerm)
 }
 
-func (repo *FsRepository) Create(path string) (io.Writer, error) {
-	return os.Create(path)
+func (repo *FsRepository) Create(path string, body []byte) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	if _, err := file.Write(body); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (repo *FsRepository) HomeDir() (string, error) {
@@ -69,6 +77,11 @@ func (repo *FsRepository) ListFiles(path string) ([]string, error) {
 	return filenames, nil
 }
 
-func (repo *FsRepository) Open(path string) (io.Reader, error) {
-	return os.Open(path)
+func (repo *FsRepository) Read(path string) ([]byte, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return make([]byte, 0), err
+	}
+	defer f.Close()
+	return io.ReadAll(f)
 }

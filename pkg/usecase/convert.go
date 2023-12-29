@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"bytes"
 	"fmt"
 	"image"
 	"image/png"
@@ -10,19 +11,14 @@ import (
 )
 
 func Convert(repos repository.Repos, filename string) error {
-	originalf, err := repos.Fs.Open(filename)
+	originalbytes, err := repos.Fs.Read(filename)
 	if err != nil {
 		return fmt.Errorf("failed to open file.")
 	}
 
-	original, _, err := image.Decode(originalf)
+	original, _, err := image.Decode(bytes.NewReader(originalbytes))
 	if err != nil {
 		return fmt.Errorf("failed to decode. %s", err.Error())
-	}
-
-	outf, err := repos.Fs.Create("out.png")
-	if err != nil {
-		return fmt.Errorf("failed to create out file.")
 	}
 
 	// resize
@@ -30,14 +26,19 @@ func Convert(repos repository.Repos, filename string) error {
 	width := originalRect.Dx()
 	height := originalRect.Dy()
 
-	resized := image.NewRGBA(image.Rect(0, 0, width/2, height/2))
+	resized := image.NewRGBA(image.Rect(0, 0, (width*3)/5, (height*3)/5))
 	draw.CatmullRom.Scale(resized, resized.Bounds(), original, originalRect, draw.Over, nil)
 
 	encoder := png.Encoder{
-		CompressionLevel: png.BestCompression,
+		CompressionLevel: png.DefaultCompression,
 	}
-	if err := encoder.Encode(outf, resized); err != nil {
+	var writer bytes.Buffer
+	if err := encoder.Encode(&writer, resized); err != nil {
 		return fmt.Errorf("failed to encode. %s", err.Error())
+	}
+
+	if err := repos.Fs.Create("out.png", writer.Bytes()); err != nil {
+		return fmt.Errorf("failed to create out file.")
 	}
 
 	return nil
