@@ -2,6 +2,7 @@ package hello
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 
 	"net/http"
@@ -13,6 +14,17 @@ import (
 
 func init() {
 	functions.HTTP("Hello", hello)
+	functions.HTTP("Hello2", hello2)
+}
+
+func hello2(w http.ResponseWriter, r *http.Request) {
+	repos := repository.NewRepos()
+	url, err := usecase.Sign(repos)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	fmt.Fprintf(w, "url: %s", url)
 }
 
 type HelloFuncRequestBody struct {

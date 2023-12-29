@@ -21,3 +21,7 @@ func (srv *Readwrite) Read(filename string) ([]byte, error) {
 func (srv *Readwrite) Write(filename string, body []byte) error {
 	return srv.repos.Fs.Create(filename, body)
 }
+
+func (srv *Readwrite) GetSignedUrl(path string) (string, error) {
+	return srv.repos.Fs.GetSignedUrl(path)
+}

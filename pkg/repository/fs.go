@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"io"
 	"os"
 )
@@ -8,6 +9,7 @@ import (
 type FsRepositoryInterface interface {
 	Create(path string, body []byte) error
 	Read(path string) ([]byte, error)
+	GetSignedUrl(path string) (string, error)
 }
 type FsRepository struct{}
 
@@ -30,4 +32,8 @@ func (repo *FsRepository) Read(path string) ([]byte, error) {
 	}
 	defer f.Close()
 	return io.ReadAll(f)
+}
+
+func (repo *FsRepository) GetSignedUrl(path string) (string, error) {
+	return "", fmt.Errorf("does not provide.")
 }
