@@ -1,37 +1,42 @@
 package hello
 
-// https://zenn.dev/urakawa_jinsei/articles/9ad3b526aed553
-
 import (
-	// "flag"
+	"encoding/json"
 	"fmt"
-	"os"
-	// "log"
+	"io"
+
 	"net/http"
 
 	"github.com/GoogleCloudPlatform/functions-framework-go/functions"
-	// "github.com/enuesaa/imgpack/pkg/repository"
-	// "github.com/enuesaa/imgpack/pkg/usecase"
+	"github.com/enuesaa/imgpack/pkg/repository"
+	"github.com/enuesaa/imgpack/pkg/usecase"
 )
 
 func init() {
 	functions.HTTP("Hello", hello)
 }
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	bucketName := os.Getenv("IMAGE_BUCKET")
-	fmt.Fprint(w, "hey", bucketName)
+type HelloFuncRequestBody struct {
+	Filename string `json:"filename"`
 }
 
-// func main() {
-// 	flag.Parse()
-// 	filename := flag.Arg(0)
-// 	if filename == "" {
-// 		log.Fatalf("Error: please provide filename to compress.\n")
-// 	}
+func hello(w http.ResponseWriter, r *http.Request) {
+	reqbodybytes, err := io.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "Error reading request body", http.StatusInternalServerError)
+		return
+	}
+	var reqbody HelloFuncRequestBody
+	if err := json.Unmarshal(reqbodybytes, &reqbody); err != nil {
+		http.Error(w, "Error reading request body", http.StatusInternalServerError)
+		return
+	}
 
-// 	repos := repository.NewRepos()
-// 	if err := usecase.Convert(repos, filename); err != nil {
-// 		log.Fatalf("Error: %s\n", err.Error())
-// 	}
-// }
+	repos := repository.NewRepos()
+	if err := usecase.Convert(repos, reqbody.Filename); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, "converted %s", reqbody.Filename)
+}
