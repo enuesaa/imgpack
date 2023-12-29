@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 
 	"net/http"
 
@@ -31,6 +32,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
 		return
 	}
+	log.Printf("filename is %s\n", reqbody.Filename)
 
 	repos := repository.NewRepos()
 	if err := usecase.Convert(repos, reqbody.Filename); err != nil {

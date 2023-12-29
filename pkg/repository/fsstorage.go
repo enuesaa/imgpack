@@ -20,21 +20,24 @@ func (repo *FsStorageRepository) client() (*storage.Client, error) {
 }
 
 func (repo *FsStorageRepository) Create(path string, body []byte) error {
-	// file, err := os.Create(path)
-	// if err != nil {
-	// 	return err
-	// }
-	// defer file.Close()
-	// if _, err := file.Write(body); err != nil {
-	// 	return err
-	// }
+	client, err := repo.client()
+	if err != nil {
+		return err
+	}
+	writer := client.Bucket(repo.bucketName()).Object(path).NewWriter(context.Background())
+	if _, err := writer.Write(body); err != nil {
+		return err
+	}
+	if err := writer.Close(); err != nil {
+		return err
+	}
 	return nil
 }
 
 func (repo *FsStorageRepository) Read(path string) ([]byte, error) {
 	client, err := repo.client()
 	if err != nil {
-		return make([]byte, 0), nil
+		return make([]byte, 0), err
 	}
 
 	f, err := client.Bucket(repo.bucketName()).Object(path).NewReader(context.Background())
