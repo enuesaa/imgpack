@@ -55,12 +55,12 @@ func (repo *FsStorageRepository) GetSignedUrl(path string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	// see https://github.com/googleapis/google-cloud-go/issues/1130#issuecomment-564301710
 	options := &storage.SignedURLOptions{
+		GoogleAccessID: os.Getenv("GOOGLE_ACCESS_ID"),
 		Scheme: storage.SigningSchemeV4,
 		Method: "PUT",
-		Headers: []string{
-			"Content-Type:application/octet-stream",
-		},
+		ContentType: "application/octet-stream",
 		Expires: time.Now().Add(15 * time.Minute),
 	}
 	u, err := client.Bucket(repo.bucketName()).SignedURL(path, options)
