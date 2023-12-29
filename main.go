@@ -20,6 +20,10 @@ func init() {
 type HelloFuncRequestBody struct {
 	Filename string `json:"filename"`
 }
+type HelloFuncResponseBody struct {
+	Converted bool   `json:"converted"`
+	Filename  string `json:"filename"`
+}
 
 func hello(w http.ResponseWriter, r *http.Request) {
 	reqbodybytes, err := io.ReadAll(r.Body)
@@ -32,7 +36,6 @@ func hello(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
 		return
 	}
-	log.Printf("filename is %s\n", reqbody.Filename)
 
 	repos := repository.NewRepos()
 	if err := usecase.Convert(repos, reqbody.Filename); err != nil {
@@ -40,5 +43,12 @@ func hello(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w, "converted %s", reqbody.Filename)
+	res := HelloFuncResponseBody{
+		Filename:  reqbody.Filename,
+		Converted: true,
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(res); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }

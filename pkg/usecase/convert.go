@@ -26,14 +26,12 @@ func Convert(repos repository.Repos, filename string) error {
 	var out []byte
 	var outputfilename string
 	if imageType == service.TypePng {
-		log.Printf("img type is png\n")
 		out, err = converter.EncodePng(&resized)
 		if err != nil {
 			return fmt.Errorf("failed to encode png file.")
 		}
 		outputfilename = "out.png"
 	} else if imageType == service.TypeJpeg {
-		log.Printf("img type is jpeg\n")
 		out, err = converter.EncodeJpeg(&resized)
 		if err != nil {
 			return fmt.Errorf("failed to encode jpeg file.")
