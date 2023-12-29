@@ -11,3 +11,7 @@
 - Cloud Function
 - Cloud Storage
 - Cloud CDN
+
+## Links
+- https://zenn.dev/buyselltech/articles/202304091000
+- https://text.baldanders.info/golang/resize-image/
