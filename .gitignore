@@ -3,3 +3,7 @@
 
 # editor
 .vscode
+
+# for test
+*.jpg
+*.png
