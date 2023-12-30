@@ -12,6 +12,10 @@ func Convert(repos repository.Repos, filename string) error {
 	readwrite := service.NewReadwrite(repos)
 	converter := service.NewConverter(repos)
 
+	if err := readwrite.PutStatus(filename, true); err != nil {
+		return err
+	}
+
 	original, err := readwrite.Read(filename)
 	if err != nil {
 		return fmt.Errorf("failed to open file.")
@@ -44,6 +48,10 @@ func Convert(repos repository.Repos, filename string) error {
 
 	if err := readwrite.Write(outputfilename, out); err != nil {
 		return fmt.Errorf("failed to create out file.")
+	}
+
+	if err := readwrite.PutStatus(filename, true); err != nil {
+		return err
 	}
 
 	return nil
