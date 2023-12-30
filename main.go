@@ -12,24 +12,24 @@ import (
 )
 
 func init() {
-	functions.HTTP("Hello", hello)
+	functions.HTTP("ImgpackConvert", hanldeConvert)
 }
 
-type HelloFuncRequestBody struct {
+type ConvertFuncRequestBody struct {
 	Filename string `json:"filename"`
 }
-type HelloFuncResponseBody struct {
+type ConvertFuncResponseBody struct {
 	Converted bool   `json:"converted"`
 	Filename  string `json:"filename"`
 }
 
-func hello(w http.ResponseWriter, r *http.Request) {
+func hanldeConvert(w http.ResponseWriter, r *http.Request) {
 	reqbodybytes, err := io.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
 		return
 	}
-	var reqbody HelloFuncRequestBody
+	var reqbody ConvertFuncRequestBody
 	if err := json.Unmarshal(reqbodybytes, &reqbody); err != nil {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
 		return
@@ -41,7 +41,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res := HelloFuncResponseBody{
+	res := ConvertFuncResponseBody{
 		Filename:  reqbody.Filename,
 		Converted: true,
 	}
