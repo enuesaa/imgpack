@@ -10,7 +10,7 @@ export const FileUploadCard = ({ file }: Props) => {
 
   return (
     <Card>
-      <Text>{file.name} {result.id ?? ''}</Text>
+      <Text>{file.name} {result.id ?? ''} {result.status}</Text>
     </Card>
   )
 }
