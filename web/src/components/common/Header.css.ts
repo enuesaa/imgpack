@@ -5,11 +5,7 @@ const main = style({
   lineHeight: '50px',
   fontSize: '25px',
   fontWeight: 'bold',
-})
-
-globalStyle(`${main} svg`, {
-  verticalAlign: 'middle',
-  margin: '0 10px',
+  marginBottom: '20px',
 })
 
 export default {
@@ -17,12 +13,6 @@ export default {
   heading: style({
     color: 'white',
     margin: '0 10px',
-    textDecoration: 'none',
-  }),
-  setting: style({
-    display: 'block',
-    width: '100px',
-    color: 'white',
     textDecoration: 'none',
   }),
 }

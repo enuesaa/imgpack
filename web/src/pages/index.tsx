@@ -1,5 +1,6 @@
 import { Header } from '@/components/common/Header'
 import { Main } from '@/components/common/Main'
+import { FileUpload } from '@/components/file/FileUpload'
 import { useSign } from '@/lib/api'
 import { Button, Text } from '@radix-ui/themes'
 import { MouseEventHandler } from 'react'
@@ -17,7 +18,8 @@ export default function TopPage() {
       <Header />
       <Main>
         <Button onClick={handleSign}>get signed url</Button>
-        <Text>{sign.data?.url}</Text>
+        <Text>{sign.data?.url} {sign.data?.id}</Text>
+        <FileUpload />
       </Main>
     </>
   )
