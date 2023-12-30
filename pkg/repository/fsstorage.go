@@ -4,7 +4,6 @@ import (
 	"context"
 	"io"
 	"os"
-	"time"
 
 	"cloud.google.com/go/storage"
 )
@@ -48,22 +47,4 @@ func (repo *FsStorageRepository) Read(path string) ([]byte, error) {
 	defer f.Close()
 
 	return io.ReadAll(f)
-}
-
-func (repo *FsStorageRepository) GetSignedUrl(path string) (string, error) {
-	client, err := repo.client()
-	if err != nil {
-		return "", err
-	}
-	options := &storage.SignedURLOptions{
-		Scheme: storage.SigningSchemeV4,
-		Method: "PUT",
-		ContentType: "application/octet-stream",
-		Expires: time.Now().Add(15 * time.Minute),
-	}
-	u, err := client.Bucket(repo.bucketName()).SignedURL(path, options)
-	if err != nil {
-		return "", err
-	}
-	return u, nil
 }
