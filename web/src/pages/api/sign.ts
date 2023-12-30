@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     .getSignedUrl({
       version: 'v4',
       action: 'write',
-      contentType: 'application/octet-stream',
+      contentType: 'image/png',
       expires: Date.now() + 15 * 60 * 1000, // 15 minutes
     })
   res.status(200).json({ url, id })

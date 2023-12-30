@@ -23,3 +23,6 @@ gcloud auth login
 gcloud config set project <project-id>
 gcloud functions list
 ```
+
+### cors
+- https://zenn.dev/tatsuyasusukida/articles/gcp-storage-cors
