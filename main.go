@@ -1,52 +1,41 @@
 package hello
 
 import (
-	"encoding/json"
-	"io"
-
-	"net/http"
+	"context"
+	"fmt"
+	"log"
 
 	"github.com/GoogleCloudPlatform/functions-framework-go/functions"
-	"github.com/enuesaa/imgpack/pkg/repository"
-	"github.com/enuesaa/imgpack/pkg/usecase"
+	"github.com/cloudevents/sdk-go/v2/event"
+	// "github.com/enuesaa/imgpack/pkg/repository"
+	// "github.com/enuesaa/imgpack/pkg/usecase"
+	"github.com/googleapis/google-cloudevents-go/cloud/storagedata"
+	"google.golang.org/protobuf/encoding/protojson"
 )
 
 func init() {
-	functions.HTTP("ImgpackConvert", hanldeConvert)
+	functions.CloudEvent("ImgpackConvert", hanldeConvert)
 }
 
-type ConvertFuncRequestBody struct {
-	Filename string `json:"filename"`
-}
-type ConvertFuncResponseBody struct {
-	Converted bool   `json:"converted"`
-	Filename  string `json:"filename"`
-}
+func hanldeConvert(ctx context.Context, e event.Event) error {
+	log.Printf("Event ID: %s", e.ID())
+	log.Printf("Event Type: %s", e.Type())
 
-func hanldeConvert(w http.ResponseWriter, r *http.Request) {
-	reqbodybytes, err := io.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, "Error reading request body", http.StatusInternalServerError)
-		return
-	}
-	var reqbody ConvertFuncRequestBody
-	if err := json.Unmarshal(reqbodybytes, &reqbody); err != nil {
-		http.Error(w, "Error reading request body", http.StatusInternalServerError)
-		return
+	var data storagedata.StorageObjectData
+	if err := protojson.Unmarshal(e.Data(), &data); err != nil {
+		return fmt.Errorf("Error: failed to unmarshal event data. %w", err)
 	}
 
-	repos := repository.NewRepos()
-	if err := usecase.Convert(repos, reqbody.Filename); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	log.Printf("Bucket: %s", data.GetBucket())
+	log.Printf("File: %s", data.GetName())
+	log.Printf("Metageneration: %d", data.GetMetageneration())
+	log.Printf("Created: %s", data.GetTimeCreated().AsTime())
+	log.Printf("Updated: %s", data.GetUpdated().AsTime())
+	
+	// repos := repository.NewRepos()
+	// if err := usecase.Convert(repos, data.GetName()); err != nil {
+	// 	return fmt.Errorf("Error: %w", err)
+	// }
 
-	res := ConvertFuncResponseBody{
-		Filename:  reqbody.Filename,
-		Converted: true,
-	}
-	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(res); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+	return nil
 }
