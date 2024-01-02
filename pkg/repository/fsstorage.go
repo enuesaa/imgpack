@@ -11,12 +11,8 @@ import (
 // for cloud storage
 type FsStorageRepository struct{}
 
-func (repo *FsStorageRepository) sourceBucketName() string {
-	return os.Getenv("SOURCE_BUCKET")
-}
-
-func (repo *FsStorageRepository) destBucketName() string {
-	return os.Getenv("DEST_BUCKET")
+func (repo *FsStorageRepository) bucketName() string {
+	return os.Getenv("IMAGE_BUCKET")
 }
 
 func (repo *FsStorageRepository) client() (*storage.Client, error) {
@@ -28,7 +24,7 @@ func (repo *FsStorageRepository) Create(path string, body []byte) error {
 	if err != nil {
 		return err
 	}
-	writer := client.Bucket(repo.destBucketName()).Object(path).NewWriter(context.Background())
+	writer := client.Bucket(repo.bucketName()).Object(path).NewWriter(context.Background())
 	if _, err := writer.Write(body); err != nil {
 		return err
 	}
@@ -44,7 +40,7 @@ func (repo *FsStorageRepository) Read(path string) ([]byte, error) {
 		return make([]byte, 0), err
 	}
 
-	f, err := client.Bucket(repo.sourceBucketName()).Object(path).NewReader(context.Background())
+	f, err := client.Bucket(repo.bucketName()).Object(path).NewReader(context.Background())
 	if err != nil {
 		return make([]byte, 0), err
 	}
