@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Storage } from '@google-cloud/storage'
-import { GoogleAuth } from 'google-auth-library';
+import { GoogleAuth } from 'google-auth-library'
 import process from 'node:process'
 import 'dotenv/config'
 
@@ -49,15 +49,14 @@ export default async function handler(req: ApiRequest<InvokeApiReq>, res: NextAp
       filename: id,
     }),
   })
-  console.log(response)
 
   const converted = response.data?.converted ?? false
-  const filename = response.data?.filename ?? ''
+  const filename = response.data?.filename ?? '' // todo
 
   const storage = new Storage({ keyFilename })
   const [url] = await storage
     .bucket(bucketName)
-    .file(filename)
+    .file('out.png')
     .getSignedUrl({
       version: 'v4',
       action: 'read',

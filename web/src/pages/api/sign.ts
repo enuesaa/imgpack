@@ -7,16 +7,12 @@ import 'dotenv/config'
 const bucketName = process.env['IMAGES_BUCKET_NAME'] ?? ''
 const keyFilename = process.env['KEY_FILENAME'] ?? ''
 
-type ApiRequest<T extends {}> = NextApiRequest & {
-  body: T
-}
-
 export type SignApiReq = {}
 export type SignApiRes = {
   url: string
   id: string
 }
-export default async function handler(req: ApiRequest<SignApiReq>, res: NextApiResponse<SignApiRes>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<SignApiRes>) {
   if (req.method !== 'POST') {
     res.status(404)
     return;

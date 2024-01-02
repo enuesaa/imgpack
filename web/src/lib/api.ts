@@ -46,7 +46,9 @@ export const useInvoke = () => useMutation<InvokeApiRes, null, {id: string}>({
   })
 
 type UploadResult = {
-  id: string | undefined
+  id?: string
+  url?: string
+  converted: boolean
 }
 export const useUpload = (file: File): UploadResult => {
   const sign = useSign()
@@ -63,5 +65,9 @@ export const useUpload = (file: File): UploadResult => {
     invoke.mutate({id: sign.data?.id ?? ''})
   }, [sign.data?.url])
 
-  return {id: sign.data?.id}
+  return {
+    id: sign.data?.id,
+    url: invoke.data?.url,
+    converted: invoke.data?.converted ?? false,
+  }
 }
