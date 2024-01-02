@@ -1,66 +1,57 @@
 import { useMutation } from 'react-query'
-import type { SignApiResponse } from '@/pages/api/sign'
+import type { SignApiRes } from '@/pages/api/sign'
 import { useEffect } from 'react'
-import { StatusApiResponse } from '@/pages/api/status'
+import type { InvokeApiReq, InvokeApiRes } from '@/pages/api/invoke'
 
-export const useSign = () => useMutation<SignApiResponse>({
+export const useSign = () => useMutation<SignApiRes>({
     mutationFn: async () => {
       const res = await fetch(`http://localhost:3000/api/sign`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
       const body = await res.json()
-      return body as SignApiResponse
+      return body as SignApiRes
     },
   })
-
-export const useStatus = () => useMutation<StatusApiResponse, null, {id: string}>({
-    mutationFn: async ({ id }) => {
-      const res = await fetch(`http://localhost:3000/api/status`, {
-        method: 'POST',
-        body: JSON.stringify({id}),
-      })
-      const body = await res.json()
-      return body as StatusApiResponse
-    },
-  })
-
-
-export const useGetStatus = () => useMutation({
-  mutationFn: async ({url}: {url: string}) => {
-    const res = await fetch(url, {
-      method: 'GET',
-    })
-    const body = await res.json()
-    console.log(res)
-    console.log(body)
-    return body?.status ?? 'uploading'
-  },
-})
 
 export const useUploadObject = () => useMutation({
-  mutationFn: async ({url, file}: {url: string, file: File}) => {
-    const res = await fetch(url, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'image/png',
-      },
-      body: file,
-    })
-    const body = await res.json()
-    console.log(res)
-    console.log(body)
-  },
-})
+    mutationFn: async ({url, file}: {url: string, file: File}) => {
+      const res = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'image/png',
+        },
+        body: file,
+      })
+      const body = await res.json()
+      console.log(res)
+      console.log(body)
+    },
+  })
+
+export const useInvoke = () => useMutation<InvokeApiRes, null, {id: string}>({
+    mutationFn: async ({ id }) => {
+      const res = await fetch(`http://localhost:3000/api/invoke`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({id} as InvokeApiReq),
+      })
+      const body = await res.json()
+      return body as InvokeApiRes
+    },
+  })
 
 type UploadResult = {
   id: string | undefined
-  status: string
 }
 export const useUpload = (file: File): UploadResult => {
   const sign = useSign()
   const uploadObject = useUploadObject()
-  const status = useStatus()
-  const getStatus = useGetStatus()
+  const invoke = useInvoke()
 
   useEffect(() => sign.mutate(), [])
   useEffect(() => {
@@ -69,9 +60,8 @@ export const useUpload = (file: File): UploadResult => {
       return
     }
     uploadObject.mutate({url, file})
-    status.mutate({id: sign.data?.id ?? ''})
+    invoke.mutate({id: sign.data?.id ?? ''})
   }, [sign.data?.url])
-  useEffect(() => getStatus.mutate({url: status.data?.url ?? ''}), [])
 
-  return {id: sign.data?.id, status: getStatus.data ?? 'uploading'}
+  return {id: sign.data?.id}
 }
