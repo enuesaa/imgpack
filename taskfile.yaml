@@ -2,7 +2,7 @@
 version: '3'
 
 tasks:
-  package:
+  pkg:
+    dir: ./adapter/cloudfunction
     cmds:
-      - zip -r tmp/app.zip * -x "web/*" -x "tmp/*" -x "*.md"
-      - mv tmp/app.zip tmp/app-$(date +%Y%m%d%H%M%S).zip
+      - zip -r ../../tmp/app-$(date +%Y%m%d%H%M%S).zip *

@@ -1,4 +1,4 @@
-package hello
+package cloudfunction
 
 import (
 	"encoding/json"
