@@ -9,3 +9,9 @@ func NewRepos() Repos {
 		Fs: &FsStorageRepository{},
 	}
 }
+
+func NewLocalRepos() Repos {
+	return Repos{
+		Fs: &FsRepository{},
+	}
+}
