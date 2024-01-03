@@ -1,6 +1,6 @@
-import { Box, Container } from '@radix-ui/themes'
+import { Box, Container, Text } from '@radix-ui/themes'
 import styles from './FileUploadZone.css'
-import { DragEventHandler } from 'react'
+import { ChangeEventHandler, DragEventHandler } from 'react'
 import { useAddFile } from '@/lib/state'
 
 export const FileUploadZone = () => {
@@ -28,6 +28,23 @@ export const FileUploadZone = () => {
     e.stopPropagation()
   }
 
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    e.preventDefault()
+    console.log(e)
+    if (e.target.files === null || e.target.files.length === 0) {
+      return
+    }
+
+    for (let i = 0; i < e.target.files.length; i++) {
+      const file = e.target.files.item(i)
+      if (file === null) {
+        continue
+      }
+      addFile(file)
+    }
+    e.target.value = ''
+  }
+
   return (
     <Box
       mt='6'
@@ -38,7 +55,10 @@ export const FileUploadZone = () => {
       onDragEnter={handleDragDoNothing}
       onDragLeave={handleDragDoNothing}
     >
-      drop here
+      <input type='file' onChange={handleChange} className={styles.input} />
+      <Box>
+        drop here
+      </Box>
     </Box>
   )
 }

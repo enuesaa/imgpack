@@ -7,5 +7,9 @@ export default {
     minHeight: '50vh',
     textAlign: 'center',
     color: 'var(--gray-a11)',
+  }),
+  input: style({
+    display: 'inline-block',
+    margin: '50px 0',
   })
 }
