@@ -1,21 +1,17 @@
+import { useListFiles } from '@/lib/state'
+import { FileUploadZone } from './FileUploadZone'
 import { Section } from '@radix-ui/themes'
-import { useDropzone } from 'react-dropzone'
-import styles from './FileUpload.css'
-import { FileUploadCard } from './FileUploadCard'
+import { FileCard } from './FileCard'
 
 export const FileUpload = () => {
-  const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
-    accept: {
-      'image/*': ['.png', '.jpeg', '.jpg'],
-    },
-  })
+  const files = useListFiles()
 
   return (
-    <Section {...getRootProps()} className={styles.main} mt='4' mb='4' p='5'>
-      <input {...getInputProps()} />
-      {acceptedFiles.map((file, i) => (
-        <FileUploadCard key={i} file={file} />
+    <Section>
+      {files.map((f, i) => (
+        <FileCard key={i} file={f} />
       ))}
+      <FileUploadZone />    
     </Section>
   )
 }

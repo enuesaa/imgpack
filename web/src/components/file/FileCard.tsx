@@ -6,7 +6,7 @@ import { MouseEventHandler } from 'react'
 type Props = {
   file: File
 }
-export const FileUploadCard = ({ file }: Props) => {
+export const FileCard = ({ file }: Props) => {
   const result = useUpload(file)
 
   const handleDownload: MouseEventHandler<HTMLButtonElement> = async (e) => {
