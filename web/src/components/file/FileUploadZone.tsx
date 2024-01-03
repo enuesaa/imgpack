@@ -1,4 +1,4 @@
-import { Box } from '@radix-ui/themes'
+import { Box, Container } from '@radix-ui/themes'
 import styles from './FileUploadZone.css'
 import { DragEventHandler } from 'react'
 import { useAddFile } from '@/lib/state'
@@ -30,14 +30,15 @@ export const FileUploadZone = () => {
 
   return (
     <Box
-      mt='4' mb='4' p='5'
+      mt='6'
+      p='9'
       className={styles.main}
       onDrop={handleDrop}
       onDragOver={handleDragDoNothing}
       onDragEnter={handleDragDoNothing}
       onDragLeave={handleDragDoNothing}
     >
-      
+      drop here
     </Box>
   )
 }

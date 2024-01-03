@@ -7,7 +7,7 @@ export const FileUpload = () => {
   const files = useListFiles()
 
   return (
-    <Section>
+    <Section p='0'>
       {files.map((f, i) => (
         <FileCard key={i} file={f} />
       ))}

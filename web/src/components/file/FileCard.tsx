@@ -1,34 +1,18 @@
-import { Button, Card } from '@radix-ui/themes'
-import { useUpload } from '@/lib/api'
-import { Text } from '@radix-ui/themes'
-import { MouseEventHandler } from 'react'
+import { Box, Card } from '@radix-ui/themes'
+import { FileStatus } from './FileStatus'
 
 type Props = {
   file: File
 }
 export const FileCard = ({ file }: Props) => {
-  const result = useUpload(file)
-
-  const handleDownload: MouseEventHandler<HTMLButtonElement> = async (e) => {
-    e.preventDefault()
-    if (result.url === undefined) {
-      return
-    }
-    const res = await fetch(result.url)
-    const img = await res.blob()
-    const url = window.URL.createObjectURL(img);
-    const link = document.createElement('a')
-    link.href = url
-    link.download = 'out.png'
-    link.click()
-  }
-
   return (
-    <Card onClick={(e) => e.stopPropagation()}>
-      <Text>
+    <Card mt='3' mb='3'>
+      <Box display='inline-block'>
+        <FileStatus file={file} />
+      </Box>
+      <Box display='inline-block'>
         {file.name}
-        {result.success ? (<Button onClick={handleDownload}>download</Button>) : (<></>)}
-      </Text>
+      </Box>
     </Card>
   )
 }

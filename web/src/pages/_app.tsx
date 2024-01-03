@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Theme appearance='dark'>
+      <Theme appearance='dark' accentColor='indigo'>
         <Component {...pageProps} />
       </Theme>
     </QueryClientProvider>
