@@ -18,16 +18,13 @@ export const useSign = () => useMutation<SignApiRes>({
 
 export const useUploadObject = () => useMutation({
     mutationFn: async ({url, file}: {url: string, file: File}) => {
-      const res = await fetch(url, {
+      await fetch(url, {
         method: 'PUT',
         headers: {
           'Content-Type': 'image/png',
         },
         body: file,
       })
-      const body = await res.json()
-      console.log(res)
-      console.log(body)
     },
   })
 
