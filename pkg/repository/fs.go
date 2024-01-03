@@ -3,6 +3,7 @@ package repository
 import (
 	"io"
 	"os"
+	"path/filepath"
 )
 
 type FsRepositoryInterface interface {
@@ -12,6 +13,9 @@ type FsRepositoryInterface interface {
 type FsRepository struct{}
 
 func (repo *FsRepository) Create(path string, body []byte) error {
+	if err := os.MkdirAll(filepath.Dir(path), os.ModePerm); err != nil {
+		return err
+	}
 	file, err := os.Create(path)
 	if err != nil {
 		return err
