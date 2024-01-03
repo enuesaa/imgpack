@@ -56,9 +56,7 @@ export const FileUploadZone = () => {
       onDragLeave={handleDragDoNothing}
     >
       <input type='file' onChange={handleChange} className={styles.input} />
-      <Box>
-        drop here
-      </Box>
+      <Box>drop here</Box>
     </Box>
   )
 }

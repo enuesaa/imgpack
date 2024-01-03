@@ -5,5 +5,5 @@ export default {
     border: 'dotted 3px #fafafa',
     borderRadius: '15px',
     minHeight: '50vh',
-  })
+  }),
 }

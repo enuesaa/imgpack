@@ -15,7 +15,7 @@ export const FileStatus = ({ file }: Props) => {
     }
     const res = await fetch(result.url)
     const img = await res.blob()
-    const url = window.URL.createObjectURL(img);
+    const url = window.URL.createObjectURL(img)
     const link = document.createElement('a')
     link.href = url
     link.download = `imgpack-${file.name}`

@@ -48,9 +48,9 @@ func hanldeConvert(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res := ConvertFuncResponseBody{
-		Success: true,
+		Success:  true,
 		Filename: reqbody.Filename,
-		Output: outputFilename,
+		Output:   outputFilename,
 	}
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(res); err != nil {

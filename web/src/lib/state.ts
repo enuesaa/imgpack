@@ -7,7 +7,7 @@ export const useListFiles = () => useAtomValue(filesAtom)
 export const useAddFile = () => {
   const setFiles = useSetAtom(filesAtom)
   const setter = (file: File) => {
-    setFiles(files => [...files, file])
+    setFiles((files) => [...files, file])
   }
 
   return setter

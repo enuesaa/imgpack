@@ -13,9 +13,9 @@ import (
 type ImageType int
 
 const (
-    TypeUnknown ImageType = iota
-    TypePng
-    TypeJpeg
+	TypeUnknown ImageType = iota
+	TypePng
+	TypeJpeg
 )
 
 func NewConverter(repos repository.Repos) Converter {
@@ -46,7 +46,7 @@ func (srv *Converter) judgeImageType(format string) ImageType {
 	return TypeUnknown
 }
 
-func (srv *Converter) Resize(original image.Image) (image.RGBA) {
+func (srv *Converter) Resize(original image.Image) image.RGBA {
 	originalRect := original.Bounds()
 	width := originalRect.Dx()
 	height := originalRect.Dy()

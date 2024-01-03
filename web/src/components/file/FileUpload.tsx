@@ -11,7 +11,7 @@ export const FileUpload = () => {
       {files.map((f, i) => (
         <FileCard key={i} file={f} />
       ))}
-      <FileUploadZone />    
+      <FileUploadZone />
     </Section>
   )
 }

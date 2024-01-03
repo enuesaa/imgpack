@@ -11,5 +11,5 @@ export default {
   input: style({
     display: 'inline-block',
     margin: '50px 0',
-  })
+  }),
 }

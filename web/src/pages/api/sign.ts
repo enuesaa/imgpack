@@ -15,7 +15,7 @@ export type SignApiRes = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse<SignApiRes>) {
   if (req.method !== 'POST') {
     res.status(404)
-    return;
+    return
   }
 
   const nanoid = customAlphabet('1234567890abcdef', 10)

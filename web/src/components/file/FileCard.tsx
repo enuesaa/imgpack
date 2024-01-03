@@ -10,9 +10,7 @@ export const FileCard = ({ file }: Props) => {
       <Box display='inline-block'>
         <FileStatus file={file} />
       </Box>
-      <Box display='inline-block'>
-        {file.name}
-      </Box>
+      <Box display='inline-block'>{file.name}</Box>
     </Card>
   )
 }

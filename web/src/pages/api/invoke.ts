@@ -28,13 +28,13 @@ type FunctionRes = {
 export default async function handler(req: ApiRequest<InvokeApiReq>, res: NextApiResponse<InvokeApiRes>) {
   if (req.method !== 'POST') {
     res.status(404)
-    return;
+    return
   }
 
   const id = req.body?.id ?? ''
   if (id === '') {
     res.status(400)
-    return;
+    return
   }
 
   const auth = new GoogleAuth({ keyFilename })
@@ -43,7 +43,7 @@ export default async function handler(req: ApiRequest<InvokeApiReq>, res: NextAp
     method: 'POST',
     url: functionUrl,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       filename: `input/${id}`,

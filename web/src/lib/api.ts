@@ -3,7 +3,8 @@ import type { SignApiRes } from '@/pages/api/sign'
 import { useEffect } from 'react'
 import type { InvokeApiReq, InvokeApiRes } from '@/pages/api/invoke'
 
-export const useSign = () => useMutation<SignApiRes>({
+export const useSign = () =>
+  useMutation<SignApiRes>({
     mutationFn: async () => {
       const res = await fetch(`http://localhost:3000/api/sign`, {
         method: 'POST',
@@ -16,8 +17,9 @@ export const useSign = () => useMutation<SignApiRes>({
     },
   })
 
-export const useUploadObject = () => useMutation({
-    mutationFn: async ({url, file}: {url: string, file: File}) => {
+export const useUploadObject = () =>
+  useMutation({
+    mutationFn: async ({ url, file }: { url: string; file: File }) => {
       await fetch(url, {
         method: 'PUT',
         headers: {
@@ -28,14 +30,15 @@ export const useUploadObject = () => useMutation({
     },
   })
 
-export const useInvoke = () => useMutation<InvokeApiRes, null, {id: string}>({
+export const useInvoke = () =>
+  useMutation<InvokeApiRes, null, { id: string }>({
     mutationFn: async ({ id }) => {
       const res = await fetch(`http://localhost:3000/api/invoke`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({id} as InvokeApiReq),
+        body: JSON.stringify({ id } as InvokeApiReq),
       })
       const body = await res.json()
       return body as InvokeApiRes
@@ -58,8 +61,8 @@ export const useUpload = (file: File): UploadResult => {
     if (url === '') {
       return
     }
-    uploadObject.mutate({url, file})
-    invoke.mutate({id: sign.data?.id ?? ''})
+    uploadObject.mutate({ url, file })
+    invoke.mutate({ id: sign.data?.id ?? '' })
   }, [sign.data?.url])
 
   return {
