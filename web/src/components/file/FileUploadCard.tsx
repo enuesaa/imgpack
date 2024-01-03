@@ -27,7 +27,7 @@ export const FileUploadCard = ({ file }: Props) => {
     <Card onClick={(e) => e.stopPropagation()}>
       <Text>
         {file.name}
-        {result.converted ? (<Button onClick={handleDownload}>download</Button>) : (<></>)}
+        {result.success ? (<Button onClick={handleDownload}>download</Button>) : (<></>)}
       </Text>
     </Card>
   )

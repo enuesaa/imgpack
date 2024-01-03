@@ -4,9 +4,4 @@
 # editor
 .vscode
 
-# for test
-*.jpg
-*.png
-
-memo.md
 tmp

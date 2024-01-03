@@ -8,43 +8,41 @@ import (
 	"github.com/enuesaa/imgpack/pkg/service"
 )
 
-func Convert(repos repository.Repos, filename string) error {
+func Convert(repos repository.Repos, filename string) (string, error) {
 	readwrite := service.NewReadwrite(repos)
 	converter := service.NewConverter(repos)
 
 	original, err := readwrite.Read(filename)
 	if err != nil {
-		return fmt.Errorf("failed to open file.")
+		return "", fmt.Errorf("failed to open file.")
 	}
 
 	originalimage, imageType, err := converter.Decode(original)
 	if err != nil {
-		return fmt.Errorf("failed to decode. %s", err.Error())
+		return "", fmt.Errorf("failed to decode. %s", err.Error())
 	}
 	resized := converter.Resize(originalimage)
 
 	var out []byte
-	var outputfilename string
+	outputFilename := fmt.Sprintf("output/%s", filename)
 	if imageType == service.TypePng {
 		out, err = converter.EncodePng(&resized)
 		if err != nil {
-			return fmt.Errorf("failed to encode png file.")
+			return "", fmt.Errorf("failed to encode png file.")
 		}
-		outputfilename = "out.png"
 	} else if imageType == service.TypeJpeg {
 		out, err = converter.EncodeJpeg(&resized)
 		if err != nil {
-			return fmt.Errorf("failed to encode jpeg file.")
+			return "", fmt.Errorf("failed to encode jpeg file.")
 		}
-		outputfilename = "out.jpg"
 	} else {
 		log.Printf("img type unknown\n")
-		return fmt.Errorf("failed to judge file type.")
+		return "", fmt.Errorf("failed to judge file type.")
 	}
 
-	if err := readwrite.Write(outputfilename, out); err != nil {
-		return fmt.Errorf("failed to create out file.")
+	if err := readwrite.Write(outputFilename, out); err != nil {
+		return "", fmt.Errorf("failed to create out file.")
 	}
 
-	return nil
+	return outputFilename, nil
 }

@@ -16,13 +16,14 @@ export type InvokeApiReq = {
 }
 export type InvokeApiRes = {
   id: string
-  converted: boolean
+  success: boolean
   url: string
 }
 
 type FunctionRes = {
-  converted: boolean
+  success: boolean
   filename: string
+  output: string
 }
 export default async function handler(req: ApiRequest<InvokeApiReq>, res: NextApiResponse<InvokeApiRes>) {
   if (req.method !== 'POST') {
@@ -35,7 +36,6 @@ export default async function handler(req: ApiRequest<InvokeApiReq>, res: NextAp
     res.status(400)
     return;
   }
-  console.log('invoke')
 
   const auth = new GoogleAuth({ keyFilename })
   const client = await auth.getIdTokenClient(functionUrl)
@@ -46,22 +46,22 @@ export default async function handler(req: ApiRequest<InvokeApiReq>, res: NextAp
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      filename: id,
+      filename: `input/${id}`,
     }),
   })
 
-  const converted = response.data?.converted ?? false
-  const filename = response.data?.filename ?? '' // todo
+  const success = response.data?.success ?? false
+  const outputFilename = response.data?.output ?? 'out.png'
 
   const storage = new Storage({ keyFilename })
   const [url] = await storage
     .bucket(bucketName)
-    .file('out.png')
+    .file(outputFilename)
     .getSignedUrl({
       version: 'v4',
       action: 'read',
       expires: Date.now() + 15 * 60 * 1000, // 15 minutes
     })
 
-  res.status(200).json({ id, converted, url })
+  res.status(200).json({ id, success, url })
 }

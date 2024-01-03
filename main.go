@@ -18,8 +18,9 @@ type ConvertFuncRequestBody struct {
 	Filename string `json:"filename"`
 }
 type ConvertFuncResponseBody struct {
-	Converted bool   `json:"converted"`
-	Filename  string `json:"filename"`
+	Success  bool   `json:"success"`
+	Filename string `json:"filename"`
+	Output   string `json:"output"`
 }
 
 func hanldeConvert(w http.ResponseWriter, r *http.Request) {
@@ -40,14 +41,16 @@ func hanldeConvert(w http.ResponseWriter, r *http.Request) {
 	}
 
 	repos := repository.NewRepos()
-	if err := usecase.Convert(repos, reqbody.Filename); err != nil {
+	outputFilename, err := usecase.Convert(repos, reqbody.Filename)
+	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	res := ConvertFuncResponseBody{
-		Filename:  reqbody.Filename,
-		Converted: true,
+		Success: true,
+		Filename: reqbody.Filename,
+		Output: outputFilename,
 	}
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(res); err != nil {

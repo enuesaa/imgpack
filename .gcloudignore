@@ -1,8 +1,0 @@
-.gcloudignore
-.git
-.gitignore
-
-node_modules
-web
-*.png
-*.jpg

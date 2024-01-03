@@ -4,5 +4,5 @@ version: '3'
 tasks:
   package:
     cmds:
-      - zip -r tmp/app.zip * -x "web/*" -x "tmp/*"
+      - zip -r tmp/app.zip * -x "web/*" -x "tmp/*" -x "*.md"
       - mv tmp/app.zip tmp/app-$(date +%Y%m%d%H%M%S).zip

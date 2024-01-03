@@ -20,11 +20,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   const nanoid = customAlphabet('1234567890abcdef', 10)
   const id = nanoid()
+  const filename = `input/${id}`
 
   const storage = new Storage({ keyFilename })
   const [url] = await storage
     .bucket(bucketName)
-    .file(id)
+    .file(filename)
     .getSignedUrl({
       version: 'v4',
       action: 'write',

@@ -48,7 +48,7 @@ export const useInvoke = () => useMutation<InvokeApiRes, null, {id: string}>({
 type UploadResult = {
   id?: string
   url?: string
-  converted: boolean
+  success: boolean
 }
 export const useUpload = (file: File): UploadResult => {
   const sign = useSign()
@@ -68,6 +68,6 @@ export const useUpload = (file: File): UploadResult => {
   return {
     id: sign.data?.id,
     url: invoke.data?.url,
-    converted: invoke.data?.converted ?? false,
+    success: invoke.data?.success ?? false,
   }
 }
