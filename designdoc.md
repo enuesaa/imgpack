@@ -7,6 +7,6 @@
 - https://text.baldanders.info/golang/resize-image/
 
 ## Development Plan
+- [cli] serve locally.
 - [web] mv nextjs api route to cloud function to put together server runtime.
-- [cli] create cli app to serve locally.
 - [compress] accept compress options.
