@@ -1,14 +1,16 @@
 import { getAuth } from 'firebase/auth'
 import { atom, useAtomValue } from 'jotai'
-import { app } from './config'
+import { app } from './app'
 
 type User = {
   logined: boolean
   uid: null|string
 }
 
-const userAtom = atom<User>({ logined: false, uid: null })
-
+const userAtom = atom<User>({
+  logined: false,
+  uid: null,
+})
 userAtom.onMount = (setAtom) => {
   const auth = getAuth(app)
   const unsubscriber = auth.onAuthStateChanged(user => {
@@ -24,3 +26,4 @@ userAtom.onMount = (setAtom) => {
 }
 
 export const useUserAtomValue = () => useAtomValue(userAtom)
+
