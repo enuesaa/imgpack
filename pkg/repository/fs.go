@@ -9,6 +9,7 @@ import (
 type FsRepositoryInterface interface {
 	Create(path string, body []byte) error
 	Read(path string) ([]byte, error)
+	ListFiles(path string) ([]string, error)
 }
 type FsRepository struct{}
 
@@ -34,4 +35,19 @@ func (repo *FsRepository) Read(path string) ([]byte, error) {
 	}
 	defer f.Close()
 	return io.ReadAll(f)
+}
+
+func (repo *FsRepository) ListFiles(path string) ([]string, error) {
+	entries, err := os.ReadDir(path)
+	if err != nil {
+		return []string{}, err
+	}
+	filenames := make([]string, 0)
+	for _, entry := range entries {
+		if entry.Name() == ".git" {
+			continue
+		}
+		filenames = append(filenames, filepath.Join(path, entry.Name()))
+	}
+	return filenames, nil
 }
