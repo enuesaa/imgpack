@@ -1,12 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
-	"github.com/enuesaa/imgpack/pkg/cli"
 	"github.com/enuesaa/imgpack/pkg/repository"
-	"github.com/enuesaa/imgpack/pkg/usecase"
 	"github.com/spf13/cobra"
 )
 
@@ -21,19 +18,21 @@ func main() {
 		Use: "imgpack",
 		Short: "web app to compress images",
 		Version: "0.0.1",
-		Args: cobra.MinimumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
-			filename := args[0]
+			serve, _ := cmd.Flags().GetBool("serve")
+			port, _ := cmd.Flags().GetInt("port")
 
-			converted, err := usecase.Convert(repos, filename)
-			if err != nil {
-				log.Fatalf("Error: %s", err.Error())
+			if serve {
+				if err := Serve(repos, port); err != nil {
+					log.Fatalf("Error: %s", err.Error())
+				}
+			} else {
+				cmd.Help()
 			}
-			fmt.Printf("converted: %s\n", converted)
 		},
 	}
-
-	app.AddCommand(cli.CreateServeCmd())
+	app.Flags().Bool("serve", false, "serve web app")
+	app.Flags().Int("port", 3000, "port")
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})
