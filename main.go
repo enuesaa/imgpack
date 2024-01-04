@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/enuesaa/imgpack/pkg/cli"
 	"github.com/enuesaa/imgpack/pkg/repository"
 	"github.com/enuesaa/imgpack/pkg/usecase"
 	"github.com/spf13/cobra"
@@ -31,6 +32,8 @@ func main() {
 			fmt.Printf("converted: %s\n", converted)
 		},
 	}
+
+	app.AddCommand(cli.CreateServeCmd())
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})
