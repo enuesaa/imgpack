@@ -3,7 +3,8 @@
 
 # next.js
 /.next/
-/dist
+/dist/*
+!/dist/.gitkeep
 
 # misc
 .DS_Store
