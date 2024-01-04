@@ -24,6 +24,8 @@ type ConvertFuncResponseBody struct {
 }
 
 func hanldeConvert(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
 	if r.Method != http.MethodPost {
 		http.Error(w, "Not Found", http.StatusNotFound)
 		return
