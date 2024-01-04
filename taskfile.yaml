@@ -6,3 +6,8 @@ tasks:
     dir: ./adapter/cloudfunction
     cmds:
       - zip -r ../../tmp/app-$(date +%Y%m%d%H%M%S).zip *
+
+  dev:
+    desc: start dev server
+    cmds:
+      - go run -tags dev . --serve
