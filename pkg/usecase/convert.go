@@ -3,6 +3,8 @@ package usecase
 import (
 	"fmt"
 	"log"
+	"path/filepath"
+	"strings"
 
 	"github.com/enuesaa/imgpack/pkg/repository"
 	"github.com/enuesaa/imgpack/pkg/service"
@@ -24,7 +26,8 @@ func Convert(repos repository.Repos, filename string) (string, error) {
 	resized := converter.Resize(originalimage)
 
 	var out []byte
-	outputFilename := fmt.Sprintf("output/%s", filename)
+	ext := filepath.Ext(filename) // like `.png`
+	outputFilename := strings.Replace(filename, ext, fmt.Sprintf("-output%s", ext), 1)
 	if imageType == service.TypePng {
 		out, err = converter.EncodePng(&resized)
 		if err != nil {

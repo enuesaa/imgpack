@@ -17,7 +17,7 @@ func main() {
 	app := &cobra.Command{
 		Use:     "imgpack",
 		Short:   "web app to compress images",
-		Version: "0.0.1",
+		Version: "0.0.2",
 		Run: func(cmd *cobra.Command, args []string) {
 			serve, _ := cmd.Flags().GetBool("serve")
 			port, _ := cmd.Flags().GetInt("port")
