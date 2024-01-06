@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/enuesaa/imgpack/pkg/repository"
 	"github.com/enuesaa/imgpack/pkg/usecase"
@@ -16,11 +17,19 @@ type FilesApiResponse struct {
 type FileItem struct {
 	Name string `json:"name"`
 }
+
+type CompressRequest struct {
+	Filename string `json:"filename"`
+}
+type CompressResponse struct {
+	Success bool `json:"success"`
+}
+
 func Serve(repos repository.Repos, port int) error {
 	app := fiber.New()
 
 	app.Get("/api/files", func(c *fiber.Ctx) error {
-		files, err := repos.Fs.ListFiles(".") // todo
+		files, err := repos.Fs.ListFiles("tmp") // todo
 		if err != nil {
 			return err
 		}
@@ -28,20 +37,27 @@ func Serve(repos repository.Repos, port int) error {
 			Items: make([]FileItem, 0),
 		}
 		for _, file := range files {
+			if !strings.HasSuffix(file, ".png") && !strings.HasSuffix(file, ".jpg") {
+				continue
+			}
 			res.Items = append(res.Items, FileItem{
 				Name: file,
 			})
 		}
 		return c.JSON(res)
 	})
-	app.Post("/api/convert", func(c *fiber.Ctx) error {
-		filename := "" // todo
-		converted, err := usecase.Convert(repos, filename)
+
+	app.Post("/api/compress", func(c *fiber.Ctx) error {
+		reqbody := new(CompressRequest)
+		if err := c.BodyParser(reqbody); err != nil {
+			return err
+		}
+		converted, err := usecase.Convert(repos, reqbody.Filename)
 		if err != nil {
 			log.Fatalf("Error: %s", err.Error())
 		}
 		fmt.Printf("converted: %s\n", converted)
-		return nil
+		return c.JSON(CompressResponse{Success: true})
 	})
 	app.Get("/*", findui.Serve)
 

@@ -1,18 +1,36 @@
-// import { useMutation } from 'react-query'
-// import type { SignApiRes } from '@/pages/api/sign'
-// import { useEffect } from 'react'
-// import type { InvokeApiReq, InvokeApiRes } from '@/pages/api/invoke'
+import { useMutation, useQuery } from 'react-query'
 
-// export const useSign = () =>
-//   useMutation<SignApiRes>({
-//     mutationFn: async () => {
-//       const res = await fetch(`http://localhost:3000/api/sign`, {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//       })
-//       const body = await res.json()
-//       return body as SignApiRes
-//     },
-//   })
+type ListFilesSchema = {
+  items: ListFilesSchemaItem[]
+}
+type ListFilesSchemaItem = {
+  name: string
+}
+export const useListFiles = () => useQuery({
+  queryKey: 'listFiles',
+  queryFn: async (): Promise<ListFilesSchema> => {
+    const res = await fetch('http://localhost:3000/api/files')
+    const body = await res.json()
+    return body
+  },
+})
+
+
+type CompressSchema = {
+  success: boolean
+}
+export const useCompress = () => useMutation({
+  mutationFn: async (filename: string): Promise<CompressSchema> => {
+    const res = await fetch('http://localhost:3000/api/compress', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        filename,
+      }),
+    })
+    const body = await res.json()
+    return body
+  },
+})
