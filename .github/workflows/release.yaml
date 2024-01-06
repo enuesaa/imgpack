@@ -18,8 +18,8 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version: '1.21'
-      - run: go install
       - run: go generate ./...
+      - run: go install
       - run: go test ./...
       - uses: goreleaser/goreleaser-action@v5
         with:
