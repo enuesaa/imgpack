@@ -10,9 +10,31 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+type FilesApiResponse struct {
+	Items []FileItem `json:"items"`
+}
+type FileItem struct {
+	Name string `json:"name"`
+}
 func Serve(repos repository.Repos, port int) error {
 	app := fiber.New()
-	app.Post("/convert", func(c *fiber.Ctx) error {
+
+	app.Get("/api/files", func(c *fiber.Ctx) error {
+		files, err := repos.Fs.ListFiles(".") // todo
+		if err != nil {
+			return err
+		}
+		res := FilesApiResponse {
+			Items: make([]FileItem, 0),
+		}
+		for _, file := range files {
+			res.Items = append(res.Items, FileItem{
+				Name: file,
+			})
+		}
+		return c.JSON(res)
+	})
+	app.Post("/api/convert", func(c *fiber.Ctx) error {
 		filename := "" // todo
 		converted, err := usecase.Convert(repos, filename)
 		if err != nil {
