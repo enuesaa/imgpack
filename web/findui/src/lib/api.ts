@@ -10,7 +10,7 @@ type ListFilesSchemaItem = {
 export const useListFiles = () => useQuery({
   queryKey: 'listFiles',
   queryFn: async (): Promise<ListFilesSchema> => {
-    const res = await fetch('http://localhost:3000/api/files')
+    const res = await fetch('http://localhost:3000/api/files?path=tmp')
     const body = await res.json()
     return body
   },

@@ -15,11 +15,13 @@ type FileItem struct {
 }
 
 func (ctl *Controller) ListFiles(c *fiber.Ctx) error {
+	path := c.Query("path")
+
 	res := ListFilesRes{
 		Items: make([]FileItem, 0),
 	}
 
-	files, err := ctl.repos.Fs.ListFiles("tmp")
+	files, err := ctl.repos.Fs.ListFiles(path)
 	if err != nil {
 		return nil
 	}
