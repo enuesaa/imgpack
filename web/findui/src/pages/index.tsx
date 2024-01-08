@@ -1,32 +1,18 @@
 import { Header } from '@/components/common/Header'
 import { Main } from '@/components/common/Main'
-import { CompressButton } from '@/components/compress/CompressButton'
-import { useListFiles } from '@/lib/api'
-import { Table } from '@radix-ui/themes'
+import { ListTable } from '@/components/compress/ListTable'
+import { useRouter } from 'next/router'
 
 export default function Page() {
-  const {data: files} = useListFiles()
+  const router = useRouter()
+  const pathQuery = router.query.path
+  const path = typeof pathQuery === 'string' ? pathQuery : 'tmp'
 
   return (
     <>
       <Header />
       <Main>
-        <Table.Root>
-          <Table.Header>
-            <Table.Row>
-              <Table.ColumnHeaderCell>filename</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>compress</Table.ColumnHeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {files?.items.map((f, i) => (
-              <Table.Row key={i}>
-                <Table.Cell>{f.name}</Table.Cell>
-                <Table.Cell><CompressButton filename={f.name} isCompressable={f.isCompressable} /></Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table.Root>
+        <ListTable path={path} />
       </Main>
     </>
   )

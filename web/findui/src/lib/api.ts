@@ -7,10 +7,10 @@ type ListFilesSchemaItem = {
   name: string
   isCompressable: boolean
 }
-export const useListFiles = () => useQuery({
-  queryKey: 'listFiles',
+export const useListFiles = (path: string) => useQuery({
+  queryKey: `listFiles-${path}`,
   queryFn: async (): Promise<ListFilesSchema> => {
-    const res = await fetch('http://localhost:3000/api/files?path=tmp')
+    const res = await fetch(`http://localhost:3000/api/files?path=${path}`)
     const body = await res.json()
     return body
   },
