@@ -11,6 +11,7 @@ type ListFilesRes struct {
 }
 type FileItem struct {
 	Name string `json:"name"`
+	IsCompressable bool `json:"isCompressable"`
 }
 
 func (ctl *Controller) ListFiles(c *fiber.Ctx) error {
@@ -23,11 +24,9 @@ func (ctl *Controller) ListFiles(c *fiber.Ctx) error {
 		return nil
 	}
 	for _, file := range files {
-		if !strings.HasSuffix(file, ".png") && !strings.HasSuffix(file, ".jpg") {
-			continue
-		}
 		res.Items = append(res.Items, FileItem{
 			Name: file,
+			IsCompressable: strings.HasSuffix(file, ".png") || strings.HasSuffix(file, ".jpg"),
 		})
 	}
 

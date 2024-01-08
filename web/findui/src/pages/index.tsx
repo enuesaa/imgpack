@@ -1,8 +1,8 @@
 import { Header } from '@/components/common/Header'
 import { Main } from '@/components/common/Main'
-import { useCompress, useListFiles } from '@/lib/api'
-import { Button, Table } from '@radix-ui/themes'
-import { MouseEventHandler } from 'react'
+import { CompressButton } from '@/components/compress/CompressButton'
+import { useListFiles } from '@/lib/api'
+import { Table } from '@radix-ui/themes'
 
 export default function Page() {
   const {data: files} = useListFiles()
@@ -22,37 +22,12 @@ export default function Page() {
             {files?.items.map((f, i) => (
               <Table.Row key={i}>
                 <Table.Cell>{f.name}</Table.Cell>
-                <Table.Cell><CompressButton filename={f.name} /></Table.Cell>
+                <Table.Cell><CompressButton filename={f.name} isCompressable={f.isCompressable} /></Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
         </Table.Root>
       </Main>
     </>
-  )
-}
-
-type Props = {
-  filename: string
-}
-const CompressButton = ({ filename }: Props) => {
-  const compress = useCompress()
-
-  const handleCompress: MouseEventHandler<HTMLButtonElement> = async (e) => {
-    e.preventDefault()
-    await compress.mutateAsync(filename)
-  }
-  console.log(compress.data)
-
-  if (compress.data?.success === true) {
-    return (
-      <div>compressed!</div>
-    )
-  }
-
-  return (
-    <Button onClick={handleCompress}>
-      compress
-    </Button>
   )
 }
