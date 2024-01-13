@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from 'react-query'
 
 type ListFilesSchema = {
+  path: string
   items: ListFilesSchemaItem[]
 }
 type ListFilesSchemaItem = {

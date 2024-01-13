@@ -23,18 +23,18 @@ func Convert(repos repository.Repos, filename string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("failed to decode. %s", err.Error())
 	}
-	resized := converter.Resize(originalimage)
+	// resized := converter.Resize(originalimage)
 
 	var out []byte
 	ext := filepath.Ext(filename) // like `.png`
 	outputFilename := strings.Replace(filename, ext, fmt.Sprintf("-output%s", ext), 1)
 	if imageType == service.TypePng {
-		out, err = converter.EncodePng(&resized)
+		out, err = converter.EncodePng(originalimage)
 		if err != nil {
 			return "", fmt.Errorf("failed to encode png file.")
 		}
 	} else if imageType == service.TypeJpeg {
-		out, err = converter.EncodeJpeg(&resized)
+		out, err = converter.EncodeJpeg(originalimage)
 		if err != nil {
 			return "", fmt.Errorf("failed to encode jpeg file.")
 		}

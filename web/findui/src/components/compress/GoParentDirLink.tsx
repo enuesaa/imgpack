@@ -15,6 +15,8 @@ export const GoParentDirLink = ({ currentPath }: Props) => {
   const parentPath = calcParentPath(currentPath)
 
   return (
-    <Link href={`/?path=${parentPath}`}><FaArrowUp /></Link>
+    <Link href={`/?path=${parentPath}`} mr='2'>
+      <FaArrowUp />
+    </Link>
   )
 }
