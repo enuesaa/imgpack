@@ -1,5 +1,6 @@
 import { Header } from '@/components/common/Header'
 import { Main } from '@/components/common/Main'
+import { GoParentDirLink } from '@/components/compress/GoParentDirLink'
 import { ListTable } from '@/components/compress/ListTable'
 import { useRouter } from 'next/router'
 
@@ -12,6 +13,7 @@ export default function Page() {
     <>
       <Header />
       <Main>
+        <GoParentDirLink currentPath={path} />
         <ListTable path={path} />
       </Main>
     </>

@@ -56,7 +56,12 @@ func (repo *FsRepository) ListFiles(path string) ([]string, error) {
 		if entry.Name() == ".git" {
 			continue
 		}
-		filenames = append(filenames, filepath.Join(path, entry.Name()))
+		path := filepath.Join(path, entry.Name())
+		absPath, err := filepath.Abs(path)
+		if err != nil {
+			continue
+		}
+		filenames = append(filenames, absPath)
 	}
 	return filenames, nil
 }
