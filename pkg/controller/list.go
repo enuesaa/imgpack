@@ -9,13 +9,13 @@ import (
 )
 
 type ListFilesRes struct {
-	Path string `json:"path"`
+	Path  string     `json:"path"`
 	Items []FileItem `json:"items"`
 }
 type FileItem struct {
-	Name string `json:"name"`
-	IsCompressable bool `json:"isCompressable"`
-	IsDir bool `json:"isDir"`
+	Name           string `json:"name"`
+	IsCompressable bool   `json:"isCompressable"`
+	IsDir          bool   `json:"isDir"`
 }
 
 func (ctl *Controller) ListFiles(c *fiber.Ctx) error {
@@ -33,7 +33,7 @@ func (ctl *Controller) ListFiles(c *fiber.Ctx) error {
 	}
 
 	res := ListFilesRes{
-		Path: path,
+		Path:  path,
 		Items: make([]FileItem, 0),
 	}
 
@@ -47,9 +47,9 @@ func (ctl *Controller) ListFiles(c *fiber.Ctx) error {
 			isDir = false
 		}
 		res.Items = append(res.Items, FileItem{
-			Name: file,
+			Name:           file,
 			IsCompressable: strings.HasSuffix(file, ".png") || strings.HasSuffix(file, ".jpg"),
-			IsDir: isDir,
+			IsDir:          isDir,
 		})
 	}
 
