@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"os"
 
@@ -11,6 +12,10 @@ import (
 
 // for cloud storage
 type FsStorageRepository struct{}
+
+func (repo *FsStorageRepository) IsDir(path string) (bool, error) {
+	return false, fmt.Errorf("not implemented yet")
+}
 
 func (repo *FsStorageRepository) bucketName() string {
 	return os.Getenv("IMAGE_BUCKET")

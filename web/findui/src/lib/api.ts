@@ -6,6 +6,7 @@ type ListFilesSchema = {
 type ListFilesSchemaItem = {
   name: string
   isCompressable: boolean
+  isDir: boolean
 }
 export const useListFiles = (path: string) => useQuery({
   queryKey: `listFiles-${path}`,

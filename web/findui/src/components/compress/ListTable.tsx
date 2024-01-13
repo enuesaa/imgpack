@@ -1,5 +1,5 @@
 import { useListFiles } from '@/lib/api'
-import { Table } from '@radix-ui/themes'
+import { Link, Table } from '@radix-ui/themes'
 import { CompressButton } from './CompressButton'
 
 type Props = {
@@ -19,7 +19,9 @@ export const ListTable = ({ path }: Props) => {
       <Table.Body>
         {files?.items.map((f, i) => (
           <Table.Row key={i}>
-            <Table.Cell>{f.name}</Table.Cell>
+            <Table.Cell>
+              {f.isDir ? (<Link href={`/?path=${f.name}`}>{f.name}</Link>) : f.name}
+            </Table.Cell>
             <Table.Cell><CompressButton filename={f.name} isCompressable={f.isCompressable} /></Table.Cell>
           </Table.Row>
         ))}
