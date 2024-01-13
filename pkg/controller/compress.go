@@ -2,6 +2,8 @@ package controller
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 
 	"github.com/enuesaa/imgpack/pkg/usecase"
 	"github.com/gofiber/fiber/v2"
@@ -19,7 +21,17 @@ func (ctl *Controller) Compress(c *fiber.Ctx) error {
 	if err := c.BodyParser(reqbody); err != nil {
 		return err
 	}
-	converted, err := usecase.Convert(ctl.repos, reqbody.Filename)
+	path := reqbody.Filename
+
+	// TODO refactor
+	homedir, err := os.UserHomeDir()
+	if err != nil {
+		return err
+	}
+	path = filepath.Join(homedir, path)
+	path, _ = filepath.Abs(path)
+
+	converted, err := usecase.Convert(ctl.repos, path)
 	if err != nil {
 		return err
 	}
