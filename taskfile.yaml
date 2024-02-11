@@ -2,12 +2,13 @@
 version: '3'
 
 tasks:
-  pkg:
-    dir: ./adapter/cloudfunction
-    cmds:
-      - zip -r ../../tmp/app-$(date +%Y%m%d%H%M%S).zip *
-
   dev:
     desc: start dev server
     cmds:
       - go run -tags dev . --serve
+
+  dockerbuild:
+    desc: build docker image
+    cmds:
+      - cd findui && pnpm install && pnpm build
+      - docker build --platform linux/amd64 --tag imgpack .

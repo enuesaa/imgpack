@@ -17,7 +17,7 @@ func Serve(repos repository.Repos, port int) error {
 	app.Post("/api/compress", ctl.Compress)
 	app.Get("/*", findui.Serve)
 
-	addr := fmt.Sprintf("127.0.0.1:%d", port)
+	addr := fmt.Sprintf("0.0.0.0:%d", port)
 	fmt.Printf("Serving web app on %s\n", addr)
 
 	return app.Listen(addr)
