@@ -5,7 +5,7 @@ import (
 
 	"github.com/enuesaa/imgpack/pkg/controller"
 	"github.com/enuesaa/imgpack/pkg/repository"
-	"github.com/enuesaa/imgpack/web/findui"
+	"github.com/enuesaa/imgpack/findui"
 	"github.com/gofiber/fiber/v2"
 )
 

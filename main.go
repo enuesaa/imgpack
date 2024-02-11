@@ -15,9 +15,9 @@ func main() {
 	repos := repository.NewLocalRepos()
 
 	app := &cobra.Command{
-		Use:     "imgpack",
-		Short:   "web app to compress images",
-		Version: "0.0.3",
+		Use:   "imgpack",
+		Short:  "Web app to compress images. To serve, please pass `--serve` flag.",
+		Version: "0.0.4",
 		Run: func(cmd *cobra.Command, args []string) {
 			serve, _ := cmd.Flags().GetBool("serve")
 			port, _ := cmd.Flags().GetInt("port")

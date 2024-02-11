@@ -1,5 +1,8 @@
 package cloudfunction
 
+// Adapter for cloudfunction
+// - To package, run `zip -r ../../tmp/app-$(date +%Y%m%d%H%M%S).zip *`
+
 import (
 	"encoding/json"
 	"io"
