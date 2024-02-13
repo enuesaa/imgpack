@@ -1,12 +1,6 @@
 import { Link } from '@radix-ui/themes'
 import { FaArrowUp } from 'react-icons/fa'
-
-// TODO test this
-const calcParentPath = (path: string): string => {
-  const splitted = path.split('/')
-  splitted.pop()
-  return splitted.join('/')
-}
+import { calcParentPath } from '@/lib/path'
 
 type Props = {
   currentPath: string

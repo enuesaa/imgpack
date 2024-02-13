@@ -8,3 +8,7 @@ Web app to compress images
 ## Links
 - https://zenn.dev/buyselltech/articles/202304091000
 - https://text.baldanders.info/golang/resize-image/
+
+## Development Plan
+- [ui] refactor api call logic. especially, around query string `?path=`
+- [api] enable to upload file
