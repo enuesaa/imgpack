@@ -6,9 +6,3 @@ tasks:
     desc: start dev server
     cmds:
       - go run -tags dev . --serve
-
-  dockerbuild:
-    desc: build docker image
-    cmds:
-      - cd findui && pnpm install && pnpm build
-      - docker build --platform linux/amd64 --tag imgpack .
