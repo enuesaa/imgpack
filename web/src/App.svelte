@@ -1,14 +1,17 @@
 <script>
-	import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query'
-	import Todos from './components/Todos.svelte'
+	import Router from 'svelte-spa-router'
+	import routes from './routes'
 
-	const queryClient = new QueryClient()
+	// import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query'
+	// import Todos from './components/Todos.svelte'
+	// const queryClient = new QueryClient()
 </script>
 
 <main>
-	a
-
-	<!-- <QueryClientProvider client={queryClient}>
+	<Router {routes} />
+	<!--
+	<QueryClientProvider client={queryClient}>
 		<Todos />
-	</QueryClientProvider>	 -->
+	</QueryClientProvider>
+	-->
 </main>
