@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { count } from './store'
 	// import { type MouseEventHandler } from 'svelte/elements'
-    // import { type PageData } from './$types'
+	// import { type PageData } from './$types'
 
-    export let data
+	export let data
 
 	const updateCount = (e) => {
 		e.preventDefault()
