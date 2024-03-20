@@ -3,7 +3,7 @@ import NotFound from './routes/NotFound.svelte'
 import Page from './routes/Page.svelte'
 
 export default {
-    '/': Home,
-    '/page': Page,
-    '*': NotFound,
+  '/': Home,
+  '/page': Page,
+  '*': NotFound
 }
