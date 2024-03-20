@@ -6,7 +6,7 @@
     "dev": "vite dev --port 3001",
     "build": "vite build",
     "check": "svelte-kit sync && svelte-check",
-    "format": "prettier --write --write \"src/**/*.svelte\""
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@melt-ui/pp": "^0.3.0",

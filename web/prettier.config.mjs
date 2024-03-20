@@ -1,7 +1,6 @@
 export default {
   printWidth: 120,
   tabWidth: 2,
-  useTabs: true,
   semi: false,
   singleQuote: true,
   jsxSingleQuote: true,
@@ -11,7 +10,16 @@ export default {
   overrides: [
     {
       files: '*.svelte',
-      options: { parser: 'svelte' }
+      options: {
+        parser: 'svelte',
+        useTabs: true
+      }
+    },
+    {
+      files: '*.ts',
+      options: {
+        useTabs: false
+      }
     }
   ]
 }
