@@ -10,6 +10,12 @@ dependencies:
     version: 3.0.0-next.219(vite@5.1.6)
 
 devDependencies:
+  '@melt-ui/pp':
+    specifier: ^0.3.0
+    version: 0.3.0(@melt-ui/svelte@0.76.0)(svelte@4.2.12)
+  '@melt-ui/svelte':
+    specifier: ^0.76.0
+    version: 0.76.0(svelte@4.2.12)
   '@sveltejs/vite-plugin-svelte':
     specifier: ^3.0.2
     version: 3.0.2(svelte@4.2.12)(vite@5.1.6)
@@ -258,6 +264,33 @@ packages:
     requiresBuild: true
     optional: true
 
+  /@floating-ui/core@1.6.0:
+    resolution:
+      { integrity: sha512-PcF++MykgmTj3CIyOQbKA/hDzOAiqI3mhuoN44WRCopIs1sgoDoU4oty4Jtqaj/y3oDU6fnVSm4QG0a3t5i0+g== }
+    dependencies:
+      '@floating-ui/utils': 0.2.1
+    dev: true
+
+  /@floating-ui/dom@1.6.3:
+    resolution:
+      { integrity: sha512-RnDthu3mzPlQ31Ss/BTwQ1zjzIhr3lk1gZB1OC56h/1vEtaXkESrOqL5fQVMfXpwGtRwX+YsZBdyHtJMQnkArw== }
+    dependencies:
+      '@floating-ui/core': 1.6.0
+      '@floating-ui/utils': 0.2.1
+    dev: true
+
+  /@floating-ui/utils@0.2.1:
+    resolution:
+      { integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q== }
+    dev: true
+
+  /@internationalized/date@3.5.2:
+    resolution:
+      { integrity: sha512-vo1yOMUt2hzp63IutEaTUxROdvQg1qlMRsbCvbay2AK2Gai7wIgCyK5weEX3nHkiLgo4qCXHijFNC/ILhlRpOQ== }
+    dependencies:
+      '@swc/helpers': 0.5.7
+    dev: true
+
   /@jridgewell/gen-mapping@0.3.5:
     resolution:
       { integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg== }
@@ -290,6 +323,35 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
+    dev: true
+
+  /@melt-ui/pp@0.3.0(@melt-ui/svelte@0.76.0)(svelte@4.2.12):
+    resolution:
+      { integrity: sha512-b07Bdh8l2KcwKVCXOY+SoBw1dk9eWvQfMSi6SoacpRVyVmmfpi0kV4oGt3HYF0tUCB3sEmVicxse50ZzZxEzEA== }
+    engines: { pnpm: '>=8.6.3' }
+    peerDependencies:
+      '@melt-ui/svelte': '>= 0.29.0'
+      svelte: ^3.55.0 || ^4.0.0 || ^5.0.0-next.1
+    dependencies:
+      '@melt-ui/svelte': 0.76.0(svelte@4.2.12)
+      estree-walker: 3.0.3
+      magic-string: 0.30.8
+      svelte: 4.2.12
+    dev: true
+
+  /@melt-ui/svelte@0.76.0(svelte@4.2.12):
+    resolution:
+      { integrity: sha512-X1ktxKujjLjOBt8LBvfckHGDMrkHWceRt1jdsUTf0EH76ikNPP1ofSoiV0IhlduDoCBV+2YchJ8kXCDfDXfC9Q== }
+    peerDependencies:
+      svelte: '>=3 <5'
+    dependencies:
+      '@floating-ui/core': 1.6.0
+      '@floating-ui/dom': 1.6.3
+      '@internationalized/date': 3.5.2
+      dequal: 2.0.3
+      focus-trap: 7.5.4
+      nanoid: 5.0.6
+      svelte: 4.2.12
     dev: true
 
   /@nodelib/fs.scandir@2.1.5:
@@ -537,6 +599,13 @@ packages:
     peerDependenciesMeta:
       broadcast-channel:
         optional: true
+    dev: true
+
+  /@swc/helpers@0.5.7:
+    resolution:
+      { integrity: sha512-BVvNZhx362+l2tSwSuyEUV4h7+jk9raNdoTSdLfwTshXJSaGmYKluGRJznziCI3KX02Z19DdsQrdfrpXAU3Hfg== }
+    dependencies:
+      tslib: 2.6.2
     dev: true
 
   /@tsconfig/svelte@5.0.2:
@@ -908,6 +977,13 @@ packages:
       to-regex-range: 5.0.1
     dev: true
 
+  /focus-trap@7.5.4:
+    resolution:
+      { integrity: sha512-N7kHdlgsO/v+iD/dMoJKtsSqs5Dz/dXZVebRgJw23LDk+jMi/974zyiOYDziY2JPp8xivq9BmUGwIJMiuSBi7w== }
+    dependencies:
+      tabbable: 6.2.0
+    dev: true
+
   /formdata-polyfill@4.0.10:
     resolution:
       { integrity: sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g== }
@@ -1128,6 +1204,13 @@ packages:
       { integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g== }
     engines: { node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1 }
     hasBin: true
+
+  /nanoid@5.0.6:
+    resolution:
+      { integrity: sha512-rRq0eMHoGZxlvaFOUdK1Ev83Bd1IgzzR+WJ3IbDJ7QOSdAxYjlurSPqFs9s4lJg29RT6nPwizFtJhQS6V5xgiA== }
+    engines: { node: ^18 || >=20 }
+    hasBin: true
+    dev: true
 
   /node-domexception@1.0.0:
     resolution:
@@ -1492,6 +1575,11 @@ packages:
       locate-character: 3.0.0
       magic-string: 0.30.8
       periscopic: 3.1.0
+    dev: true
+
+  /tabbable@6.2.0:
+    resolution:
+      { integrity: sha512-Cat63mxsVJlzYvN51JmVXIgNoUokrIaT2zLclCXjRd8boZ0004U4KCs/sToJ75C6sdlByWxpYnb5Boif1VSFew== }
     dev: true
 
   /to-regex-range@5.0.1:

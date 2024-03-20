@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 import routify from '@roxi/routify/vite-plugin'
+import { preprocessMeltUI, sequence } from '@melt-ui/pp'
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 
 export default defineConfig({
   plugins: [
@@ -14,7 +15,7 @@ export default defineConfig({
       compilerOptions: {
         hydratable: !!process.env.ROUTIFY_SSR_ENABLE
       },
-      preprocess: vitePreprocess()
+      preprocess: sequence([vitePreprocess(), preprocessMeltUI()])
     })
   ]
 })
