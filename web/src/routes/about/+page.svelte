@@ -12,3 +12,4 @@
 	<button use:melt={$trigger}>{$open ? 'Close' : 'Open'}</button>
 	<div use:melt={$content}>Obi-Wan says: Hello there!</div>
 </div>
+<a href="/">top</a>
