@@ -4,8 +4,9 @@
 
 	const user = writable()
 
-	$: user.set({ name: 'aaa' });
+	$: user.set({ name: 'aaa' })
 
 	setContext('user', user)
 </script>
+
 <slot />
