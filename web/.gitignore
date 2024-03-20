@@ -8,4 +8,4 @@ dist
 dist-ssr
 *.local
 
-.routify
+.svelte-kit

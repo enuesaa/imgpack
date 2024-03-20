@@ -1,6 +1,5 @@
 <script>
   import { createCollapsible, melt } from '@melt-ui/svelte'
-
   const {
     elements: { root, content, trigger },
     states: { open }
