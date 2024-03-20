@@ -7,6 +7,7 @@ const config = {
   preprocess: sequence([vitePreprocess(), preprocessMeltUI()]),
   kit: {
     adapter: adapter()
-  }
+  },
 }
+
 export default config
