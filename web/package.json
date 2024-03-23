@@ -28,6 +28,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@tanstack/svelte-query": "^5.28.4"
+    "@tanstack/svelte-query": "^5.28.4",
+    "svelte-icons": "^2.1.0"
   }
 }
