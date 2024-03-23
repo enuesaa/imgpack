@@ -1,9 +1,9 @@
 export const normalizePath = (path: string|null): string => {
   if (path === '') {
-    return './'
+    return '/'
   }
   if (path === null) {
-    return './'
+    return '/'
   }
   return path
 }
