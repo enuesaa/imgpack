@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores'
+	import { normalizePath } from '$lib/path'
 	import Files from './Files.svelte'
 	import GoToParentDirLink from './GoToParentDirLink.svelte'
 
-	const path = $page.url.searchParams.get('path') ?? './'
+	let path = normalizePath($page.url.searchParams.get('path'))
 </script>
 
 <GoToParentDirLink path={path} />

@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { useListFiles } from '$lib/api'
+	import { listFiles } from '$lib/api'
+	import File from './File.svelte'
 
 	export let path: string
-	const files = useListFiles(path)
+	const files = listFiles(path)
 </script>
 
+<div>current: {path}</div>
 <ul>
 	{#if $files.isLoading}
 		Loading...
@@ -13,7 +15,7 @@
 	{:else if $files.isSuccess}
 		<p>{$files.data.path}</p>
 		{#each $files.data.items as item}
-			<li>{item.name}</li>
+			<li><File item={item} /></li>
 		{/each}
 	{/if}
 </ul>
