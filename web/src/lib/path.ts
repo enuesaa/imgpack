@@ -1,16 +1,24 @@
 export const normalizePath = (path: string|null): string => {
   if (path === '') {
-    return '/'
+    return './'
   }
   if (path === null) {
-    return '/'
+    return './'
   }
   return path
 }
 
-// TODO test this
 export const calcParentPath = (path: string): string => {
+  if (path.startsWith('./')) {
+    return `.${path}`
+  }
   const splitted = path.split('/')
-  splitted.pop()
-  return splitted.join('/')
+  if (splitted.length > 0) {
+    const lastItem = splitted[splitted.length - 1]
+    if (lastItem !== '') {
+      splitted.pop()
+      return splitted.join('/') + '/'
+    }
+  }
+  return `../${path}`
 }

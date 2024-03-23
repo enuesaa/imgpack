@@ -57,19 +57,7 @@ func (repo *FsRepository) ListFiles(path string) ([]string, error) {
 			continue
 		}
 		path := filepath.Join(path, entry.Name())
-		absPath, err := filepath.Abs(path)
-		if err != nil {
-			continue
-		}
-		homeDir, err := os.UserHomeDir()
-		if err != nil {
-			continue
-		}
-		homeRelPath, err := filepath.Rel(homeDir, absPath)
-		if err != nil {
-			continue
-		}
-		filenames = append(filenames, homeRelPath)
+		filenames = append(filenames, path)
 	}
 	return filenames, nil
 }

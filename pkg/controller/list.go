@@ -1,8 +1,6 @@
 package controller
 
 import (
-	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
@@ -21,28 +19,17 @@ type FileItem struct {
 func (ctl *Controller) ListFiles(c *fiber.Ctx) error {
 	path := c.Query("path")
 
-	homedir, err := os.UserHomeDir()
-	if err != nil {
-		return err
-	}
-
-	// TODO fix
-	if path == "./" {
-		path, _ = filepath.Abs(path)
-		path, _ = filepath.Rel(homedir, path)
-	}
-
 	res := ListFilesRes{
 		Path:  path,
 		Items: make([]FileItem, 0),
 	}
 
-	files, err := ctl.repos.Fs.ListFiles(filepath.Join(homedir, path))
+	files, err := ctl.repos.Fs.ListFiles(path)
 	if err != nil {
 		return err
 	}
 	for _, file := range files {
-		isDir, err := ctl.repos.Fs.IsDir(filepath.Join(homedir, file))
+		isDir, err := ctl.repos.Fs.IsDir(file)
 		if err != nil {
 			isDir = false
 		}
