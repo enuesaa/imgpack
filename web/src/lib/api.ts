@@ -20,7 +20,6 @@ export const useListFiles = (path: string) => createQuery({
   },
 })
 
-
 type CompressSchema = {
   success: boolean
 }

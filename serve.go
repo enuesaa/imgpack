@@ -7,10 +7,16 @@ import (
 	"github.com/enuesaa/imgpack/pkg/repository"
 	"github.com/enuesaa/imgpack/web"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func Serve(repos repository.Repos, port int) error {
 	app := fiber.New()
+
+	app.Use(cors.New(cors.Config{
+		// for dev
+		AllowOrigins: "http://localhost:3001",
+	}))
 
 	ctl := controller.New(repos)
 	app.Get("/api/files", ctl.ListFiles)
