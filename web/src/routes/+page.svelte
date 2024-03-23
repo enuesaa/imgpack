@@ -2,10 +2,10 @@
 	import { page } from '$app/stores'
 	import { normalizePath } from '$lib/path'
 	import Files from './Files.svelte'
-	import GoToParentDirLink from './GoToParentDirLink.svelte'
+	import GoToParentDir from './GoToParentDir.svelte'
 
-	let path = normalizePath($page.url.searchParams.get('path'))
+	const path = normalizePath($page.url.searchParams.get('path'))
 </script>
 
-<GoToParentDirLink path={path} />
+<GoToParentDir path={path} />
 <Files path={path} />

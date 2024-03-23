@@ -5,14 +5,18 @@
 	export let item: FileItem
 </script>
 
-<div>
-	{item.name}
+<div class="p-1 my-1 flex">
+	<span class="flex-none">
+		{item.name}
+	</span>
 
 	{#if item.isDir}
-		<a href={`/?path=${item.name}`}><ArrowRightIcon /></a>
+		<a href={`/?path=${item.name}`} data-sveltekit-reload class="mx-3 px-1 bg-slate-600">
+			<ArrowRightIcon />
+		</a>
 	{/if}
 
 	{#if item.isCompressable}
-		<button>compress</button>
+		<button class="mx-3 px-2 bg-slate-600" style="border-radius: 10px;">compress</button>
 	{/if}
 </div>

@@ -6,14 +6,12 @@
 	const files = listFiles(path)
 </script>
 
-<div>current: {path}</div>
 <ul>
 	{#if $files.isLoading}
 		Loading...
 	{:else if $files.isError}
 		error: {$files.error.message}
 	{:else if $files.isSuccess}
-		<p>{$files.data.path}</p>
 		{#each $files.data.items as item}
 			<li><File item={item} /></li>
 		{/each}
