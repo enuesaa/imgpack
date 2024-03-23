@@ -6,7 +6,7 @@ type ListFilesSchema = {
   path: string
   items: ListFilesSchemaItem[]
 }
-type ListFilesSchemaItem = {
+export type ListFilesSchemaItem = {
   name: string
   isCompressable: boolean
   isDir: boolean

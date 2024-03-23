@@ -1,24 +1,25 @@
 <script lang="ts">
-	import { createTreeView } from '@melt-ui/svelte'
-	import TreeItem, {type Item} from './TreeItem.svelte';
+	import { melt, createTreeView } from '@melt-ui/svelte'
+	import type { ListFilesSchemaItem } from '$lib/api'
 
-	const { elements: { tree, item: itemfn, group: groupfn } } = createTreeView()
-	const treeitem: Item = {
-		title: 'lib',
-		children: [
-			{
-				title: 'tree',
-				children: [
-					{title: 'Tree.svelte',children: []},
-				],
-			},
-			{title: 'index.js',children: []},
-		],
-	};
+	const { elements: { tree, item, group } } = createTreeView()
+	const files: ListFilesSchemaItem[] = [{
+		name: 'lib',
+		isCompressable: false,
+		isDir: true,
+	}]
 </script>
 
-<div class="flex h-[18.75rem] w-[18.75rem] flex-col rounded-x md:h-[350px]">
-	<ul class="overflow-auto px-4 pb-4 pt-2" {...$tree}>
-		<TreeItem item={treeitem} level={1} itemfn={itemfn} groupfn={groupfn} />
-	</ul>
-</div>
+<ul class="overflow-auto px-4 pb-4 pt-2" {...$tree}>
+	{#each files as file}
+		<li
+			class="flex items-center gap-1 p-1"
+			use:melt={$item({
+				id: file.name,
+				hasChildren: file.isDir,
+			})}
+		>
+			<span>{file.name}</span>
+		</li>
+	{/each}
+</ul>
