@@ -10,4 +10,5 @@ Web app to compress images
 - https://text.baldanders.info/golang/resize-image/
 
 ## Development Plan
+- CLIをマシンに入れるのは面倒なので、ローカルファイルを見に行く機能は廃止し、ホストする形式に組み替える
 - [api] enable to upload file
