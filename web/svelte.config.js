@@ -9,9 +9,6 @@ const config = {
     adapter: adapter({
       pages: 'dist'
     }),
-    // alias: {
-    //   'lib': './src/lib', // this is default setting
-    // },
   }
 }
 
