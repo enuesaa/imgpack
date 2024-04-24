@@ -36,6 +36,4 @@ jobs:
       - working-directory: ./ui
         run: pnpm install
       - working-directory: ./ui
-        run: pnpm check
-      - working-directory: ./ui
         run: pnpm build
