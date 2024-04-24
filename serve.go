@@ -5,7 +5,7 @@ import (
 
 	"github.com/enuesaa/imgpack/pkg/controller"
 	"github.com/enuesaa/imgpack/pkg/repository"
-	"github.com/enuesaa/imgpack/web"
+	"github.com/enuesaa/imgpack/ui"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
