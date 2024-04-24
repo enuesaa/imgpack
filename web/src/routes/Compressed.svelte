@@ -3,8 +3,13 @@
 	import { removeImage } from '$lib/images'
 </script>
 
-{#each $images as image}
-	<img src={image.compressedUrl} />
-	<a href={image.compressedUrl} download={image.filename}>download</a>
-	<button on:click|preventDefault={() => removeImage(image.id)}>remove</button>
-{/each}
+<div class="flex gap-5 p-5">
+	{#each $images as image}
+		<div class="w-20 h-20 inline-block">
+			<a href={image.compressedUrl} download={image.filename.replace('.', '.out.')} class="w-full">
+				<img src={image.compressedUrl} />			
+			</a>
+			<button on:click|preventDefault={() => removeImage(image.id)}>remove</button>
+		</div>
+	{/each}
+</div>
