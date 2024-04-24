@@ -20,7 +20,7 @@ func Serve(repos repository.Repos, port int) error {
 
 	ctl := controller.New(repos)
 	app.Post("/api/upload", ctl.Upload)
-	app.Get("/*", web.Serve)
+	app.Get("/*", ui.Serve)
 
 	addr := fmt.Sprintf("0.0.0.0:%d", port)
 	fmt.Printf("Serving web app on %s\n", addr)
