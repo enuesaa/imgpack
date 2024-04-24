@@ -21,7 +21,7 @@
 </script>
 
 <section
-	class="w-full rounded-md text-center p-20"
+	class="w-full rounded-md text-center p-20 cursor-pointer"
 	style="border: solid 1px #fafafa;"
 	on:drop|preventDefault={handleDrop}
 	on:dragover|preventDefault
