@@ -1,23 +1,21 @@
 <script lang="ts">
+	import { addImage } from '$lib/images'
 	import { useUpload } from '$lib/upload'
 
 	const upload = useUpload()
-	let compressedUrl: string|null = null;
 
 	async function handleUpload(e: Event & { currentTarget: HTMLInputElement }) {
 		const files = e.currentTarget.files
 		if (files === null) {
 			return
 		}
+		const file = files[0]
+		const filename = file.name
 		const formdata = new FormData()
-		formdata.append('file', files[0])
-		compressedUrl = await $upload.mutateAsync(formdata)	
+		formdata.append('file', file)
+		const compressedUrl = await $upload.mutateAsync(formdata)
+		addImage({ compressedUrl, filename })
 	}
 </script>
 
 <input multiple type="file" on:change|preventDefault={handleUpload} />
-
-{#if compressedUrl !== null}
-	<img src={compressedUrl} />
-	<a href={compressedUrl} download="compressed.png">download</a>
-{/if}
