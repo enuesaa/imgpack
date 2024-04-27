@@ -13,7 +13,7 @@
     "strict": true,
     "outDir": "./dist"
   },
-  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte", "vite.config.ts"],
+  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte", "vite.config.ts", ".svelte-kit/*.d.ts"],
   "exclude": ["node_modules", "dist"],
   "extends": "./.svelte-kit/tsconfig.json"
 }

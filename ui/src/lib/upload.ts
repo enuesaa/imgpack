@@ -1,7 +1,6 @@
 import { createMutation } from '@tanstack/svelte-query'
 import { addImage } from './images'
-
-const apiBaseUrl = 'http://localhost:3000/api/'
+import { PUBLIC_API_BASE } from '$env/static/public'
 
 export const useUpload = () => createMutation({
   mutationFn: async (files: FileList) => {
@@ -11,7 +10,7 @@ export const useUpload = () => createMutation({
 		const formdata = new FormData()
 		formdata.append('file', file)
 
-    const res = await fetch(`${apiBaseUrl}upload`, {
+    const res = await fetch(`${PUBLIC_API_BASE}upload`, {
       method: 'POST',
       body: formdata
     })
