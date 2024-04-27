@@ -8,6 +8,8 @@ import (
 	"github.com/enuesaa/imgpack/pkg/service"
 )
 
+//see https://zenn.dev/buyselltech/articles/202304091000
+//see https://text.baldanders.info/golang/resize-image/
 func Compress(repos repository.Repos, original []byte) ([]byte, service.ImageType, error) {
 	var out []byte
 
