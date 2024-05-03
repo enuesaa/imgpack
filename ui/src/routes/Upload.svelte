@@ -31,7 +31,8 @@
 	drop here
 	<input
 		bind:this={inputfile}
-		type="file" multiple
+		type="file"
+		multiple
 		class="opacity-0 block"
 		on:change|preventDefault|stopPropagation={handleUpload}
 	/>

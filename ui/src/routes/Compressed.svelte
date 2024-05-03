@@ -7,7 +7,7 @@
 	{#each $images as image}
 		<div class="w-20 h-20 inline-block">
 			<a href={image.compressedUrl} download={image.filename.replace('.', '.out.')} class="w-full">
-				<img src={image.compressedUrl} />			
+				<img src={image.compressedUrl} />
 			</a>
 			<button on:click|preventDefault={() => removeImage(image.id)}>remove</button>
 		</div>
