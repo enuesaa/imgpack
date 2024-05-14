@@ -12,12 +12,12 @@ func init() {
 }
 
 func main() {
-	repos := repository.NewLocalRepos()
+	repos := repository.New()
 
 	app := &cobra.Command{
 		Use:   "imgpack",
 		Short:  "Web app to compress images.",
-		Version: "0.0.5",
+		Version: "0.0.6",
 		Run: func(cmd *cobra.Command, args []string) {
 			port, _ := cmd.Flags().GetInt("port")
 			if err := Serve(repos, port); err != nil {

@@ -4,13 +4,7 @@ type Repos struct {
 	Fs FsRepositoryInterface
 }
 
-func NewRepos() Repos {
-	return Repos{
-		Fs: &FsStorageRepository{},
-	}
-}
-
-func NewLocalRepos() Repos {
+func New() Repos {
 	return Repos{
 		Fs: &FsRepository{},
 	}
