@@ -3,7 +3,3 @@
 
 # editor
 .vscode
-
-# go
-go.work
-go.work.sum
