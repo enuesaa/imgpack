@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/enuesaa/imgpack/pkg/repository"
+	"github.com/enuesaa/imgpack/internal/repository"
 	"github.com/spf13/cobra"
 )
 

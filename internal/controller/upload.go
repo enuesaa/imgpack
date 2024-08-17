@@ -3,8 +3,8 @@ package controller
 import (
 	"io"
 
-	"github.com/enuesaa/imgpack/pkg/service"
-	"github.com/enuesaa/imgpack/pkg/usecase"
+	"github.com/enuesaa/imgpack/internal/service"
+	"github.com/enuesaa/imgpack/internal/usecase"
 	"github.com/gofiber/fiber/v2"
 )
 

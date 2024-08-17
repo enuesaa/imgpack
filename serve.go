@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/enuesaa/imgpack/pkg/controller"
-	"github.com/enuesaa/imgpack/pkg/repository"
+	"github.com/enuesaa/imgpack/internal/controller"
+	"github.com/enuesaa/imgpack/internal/repository"
 	"github.com/enuesaa/imgpack/ui"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"

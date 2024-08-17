@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/enuesaa/imgpack/pkg/repository"
-	"github.com/enuesaa/imgpack/pkg/service"
+	"github.com/enuesaa/imgpack/internal/repository"
+	"github.com/enuesaa/imgpack/internal/service"
 )
 
 //see https://zenn.dev/buyselltech/articles/202304091000

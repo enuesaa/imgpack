@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/enuesaa/imgpack/pkg/repository"
+	"github.com/enuesaa/imgpack/internal/repository"
 )
 
 func NewReadwrite(repos repository.Repos) Readwrite {

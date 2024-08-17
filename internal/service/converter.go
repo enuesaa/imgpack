@@ -6,7 +6,7 @@ import (
 	"image/jpeg"
 	"image/png"
 
-	"github.com/enuesaa/imgpack/pkg/repository"
+	"github.com/enuesaa/imgpack/internal/repository"
 	"golang.org/x/image/draw"
 )
 

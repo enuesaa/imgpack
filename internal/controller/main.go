@@ -1,6 +1,6 @@
 package controller
 
-import "github.com/enuesaa/imgpack/pkg/repository"
+import "github.com/enuesaa/imgpack/internal/repository"
 
 func New(repos repository.Repos) Controller {
 	return Controller{
