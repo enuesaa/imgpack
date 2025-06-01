@@ -1,14 +1,16 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
+	import { preventdefault } from '$lib/utils'
+
 	type Props = {
 		addOverlay: (file: File) => void
 	}
 	let { addOverlay }: Props = $props()
 
-	let inputfile = $state<HTMLInputElement>()
+	let input = $state<HTMLInputElement>()
 
-	function handleFileUpload(e: Event & {currentTarget: HTMLInputElement}) {
+	function handleChange(e: Event & {currentTarget: HTMLInputElement}) {
 		if (e.currentTarget === undefined || e.currentTarget.files === null) {
 			return
 		}
@@ -17,20 +19,19 @@
 		}
 	}
 
-	function handleClick(e: Event) {
-		e.preventDefault()
-		if (inputfile === undefined) {
+	function handleClick() {
+		if (input === undefined) {
 			return
 		}
-		inputfile.click()
+		input.click()
 	}
 </script>
 
 <input
-	bind:this={inputfile}
+	bind:this={input}
 	type="file"
 	accept="image/*"
-	onchange={handleFileUpload}
+	onchange={preventdefault(handleChange)}
 	class="hidden"
 />
-<button onclick={handleClick}>選択</button>
+<button onclick={preventdefault(handleClick)}>選択</button>
