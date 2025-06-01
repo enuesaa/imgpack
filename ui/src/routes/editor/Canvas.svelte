@@ -3,6 +3,13 @@
 <script lang="ts">
 	import { preventdefault } from '$lib/utils'
 	import CanvasBackground from './CanvasBackground.svelte'
+	import type { Overlay } from './+page.svelte'
+	import CanvasDraw from './CanvasDraw.svelte'
+
+	type Props = {
+		overlays: Overlay[]
+	}
+	let { overlays = $bindable() }: Props = $props()
 
 	let canvas = $state<HTMLCanvasElement>()
 	let ctx = $state<CanvasRenderingContext2D>()
@@ -21,4 +28,5 @@
 	class="border-white border my-1"
 ></canvas>
 
-<CanvasBackground {canvas} {ctx} />
+<CanvasBackground bind:overlays bind:canvas bind:ctx />
+<!-- <CanvasDraw bind:overlays bind:canvas bind:ctx /> -->

@@ -17,5 +17,5 @@
 	let overlays = $state<Overlay[]>([])
 </script>
 
-<ImageSelector {overlays} />
-<Canvas />
+<ImageSelector bind:overlays />
+<Canvas bind:overlays />

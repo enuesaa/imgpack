@@ -7,7 +7,7 @@
 	type Props = {
 		overlays: Overlay[]
 	}
-	let { overlays }: Props = $props()
+	let { overlays = $bindable() }: Props = $props()
 
 	let input = $state<HTMLInputElement>()
 
@@ -24,17 +24,19 @@
 		const reader = new FileReader()
 		reader.onload = (e) => {
 			const img = new Image()
+			img.onload = () => {
+				overlays.push({
+					img,
+					x: 50,
+					y: 50,
+					width: img.width / 2,
+					height: img.height / 2
+				})
+			}
 			if (e.target === null || typeof e.target.result !== 'string') {
 				return
 			}
 			img.src = e.target.result
-			overlays.push({
-				img,
-				x: 50,
-				y: 50,
-				width: img.width / 2,
-				height: img.height / 2
-			})
 		}
 		reader.readAsDataURL(file)
 	}
