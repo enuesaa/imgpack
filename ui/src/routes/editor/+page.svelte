@@ -1,13 +1,21 @@
 <svelte:options runes={true} />
 
+<script lang="ts" module>
+	export type Overlay = {
+		img: HTMLImageElement
+		x: number
+		y: number
+		width: number
+		height: number
+	}
+</script>
+
 <script lang="ts">
 	import ImageSelector from './ImageSelector.svelte'
 	import Canvas from './Canvas.svelte'
 
-	function addOverlay(file: File) {
-
-	}
+	let overlays = $state<Overlay[]>([])
 </script>
 
-<ImageSelector {addOverlay} />
+<ImageSelector {overlays} />
 <Canvas />
