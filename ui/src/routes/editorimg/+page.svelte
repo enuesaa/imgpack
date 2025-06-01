@@ -63,16 +63,7 @@
 	}
 </script>
 
-<canvas
-	bind:this={canvas}
-	class="border-white border my-1"
-></canvas>
+<canvas bind:this={canvas} class="border-white border my-1"></canvas>
 
-<input
-	bind:this={inputfile}
-	type="file"
-	accept="image/*"
-	onchange={handleOverlayUpload}
-	style="display:none"
-/>
+<input bind:this={inputfile} type="file" accept="image/*" onchange={handleOverlayUpload} style="display:none" />
 <button onclick={handleClick}>選択</button>
