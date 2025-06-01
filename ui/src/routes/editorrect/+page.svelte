@@ -40,10 +40,17 @@
 		ctx.fillStyle = 'red'
 		ctx.fillText(text, x + padding, y)
 	}
+
+	function handleClick(e: Event) {
+		e.preventDefault()
+		drawLabel(10, 50, 'テキスト2')
+	}
 </script>
 
 <canvas
 	bind:this={canvas}
 	class="border-white border my-1"
 ></canvas>
+
+<button onclick={handleClick}>テキスト変更</button>
 
