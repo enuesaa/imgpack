@@ -1,3 +1,5 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	let canvas = $state<HTMLCanvasElement>()
 	let ctx = $state<CanvasRenderingContext2D>()
@@ -76,7 +78,6 @@
 	}
 </script>
 
-<svelte:options runes={true} />
 <canvas
 	bind:this={canvas}
 	onmousedown={handleMouseDown}
@@ -84,7 +85,4 @@
 	onmouseup={handleMouseUp}
 	class="border-white border my-1"
 ></canvas>
-<canvas
-	bind:this={ocanvas}
-	class="border-white border my-1"
-></canvas>
+<canvas bind:this={ocanvas} class="border-white border my-1"></canvas>
