@@ -47,10 +47,6 @@
 	}
 </script>
 
-<canvas
-	bind:this={canvas}
-	class="border-white border my-1"
-></canvas>
+<canvas bind:this={canvas} class="border-white border my-1"></canvas>
 
 <button onclick={handleClick}>テキスト変更</button>
-
