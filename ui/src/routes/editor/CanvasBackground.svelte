@@ -21,7 +21,7 @@
 		if (whiteCtx === undefined) {
 			return
 		}
-		whiteCtx.fillStyle = '#cccccc'
+		whiteCtx.fillStyle = '#fafafa'
 		whiteCtx.fillRect(0, 0, 1, 1)
 
 		const whiteImage = new Image()
@@ -39,14 +39,5 @@
 			}
 			ctx.drawImage(whiteImage, 0, 0, width, height)
 		}
-
-		overlays.forEach((overlay) => {
-			console.log('a')
-			if (ctx === undefined) {
-				return
-			}
-					console.log('b')
-			ctx.drawImage(overlay.img, overlay.x, overlay.y, overlay.width, overlay.height)
-		})
 	})
 </script>

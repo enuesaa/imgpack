@@ -29,4 +29,4 @@
 ></canvas>
 
 <CanvasBackground bind:overlays bind:canvas bind:ctx />
-<!-- <CanvasDraw bind:overlays bind:canvas bind:ctx /> -->
+<CanvasDraw bind:overlays bind:canvas bind:ctx />
