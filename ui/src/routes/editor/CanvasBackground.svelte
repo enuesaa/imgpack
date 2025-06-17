@@ -1,13 +1,11 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	import type { Overlay } from './+page.svelte'
 	type Props = {
 		canvas?: HTMLCanvasElement
 		ctx?: CanvasRenderingContext2D
-		overlays: Overlay[]
 	}
-	let { canvas = $bindable(), ctx = $bindable(), overlays = $bindable() }: Props = $props()
+	let { canvas = $bindable(), ctx = $bindable() }: Props = $props()
 
 	const width = 500
 	const height = 500

@@ -10,13 +10,9 @@
 	let { canvas = $bindable(), ctx = $bindable(), overlays = $bindable() }: Props = $props()
 
 	$effect(() => {
-		console.log('a')
 		if (canvas === undefined || ctx === undefined) {
 			return
 		}
-		// ctx.clearRect(0, 0, canvas.width, canvas.height)
-		// ctx.drawImage(baseImage, 0, 0)
-
 		overlays.forEach((overlay) => {
 			if (ctx === undefined) {
 				return

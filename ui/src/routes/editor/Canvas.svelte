@@ -28,5 +28,5 @@
 	class="border-white border my-1"
 ></canvas>
 
-<CanvasBackground bind:overlays bind:canvas bind:ctx />
+<CanvasBackground bind:canvas bind:ctx />
 <CanvasDraw bind:overlays bind:canvas bind:ctx />
