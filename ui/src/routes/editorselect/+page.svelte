@@ -53,7 +53,7 @@
 		reader.readAsDataURL(file)
 	}
 
-	function handleFileUpload(e: Event & {currentTarget: HTMLInputElement}) {
+	function handleFileUpload(e: Event & { currentTarget: HTMLInputElement }) {
 		const files = Array.from(e.currentTarget?.files ?? [])
 		files.forEach(addOverlay)
 	}
@@ -105,7 +105,7 @@
 
 	function getMousePos(e: MouseEvent) {
 		if (canvas === undefined) {
-			return {x: 0, y:0}
+			return { x: 0, y: 0 }
 		}
 		const rect = canvas.getBoundingClientRect()
 		return {
@@ -114,7 +114,7 @@
 		}
 	}
 
-	function hitTestHandles(pos: {x: number, y: number}, overlay: Overlay) {
+	function hitTestHandles(pos: { x: number; y: number }, overlay: Overlay) {
 		const corners = getCorners(overlay)
 		for (const [corner, handlePos] of Object.entries(corners)) {
 			if (

@@ -17,7 +17,6 @@
 	function handleMouseDown(e: MouseEvent) {}
 	function handleMouseMove(e: MouseEvent) {}
 	function handleMouseUp(e: MouseEvent) {}
-
 </script>
 
 <canvas

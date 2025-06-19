@@ -11,7 +11,7 @@
 
 	let input = $state<HTMLInputElement>()
 
-	function handleChange(e: Event & {currentTarget: HTMLInputElement}) {
+	function handleChange(e: Event & { currentTarget: HTMLInputElement }) {
 		if (e.currentTarget === undefined || e.currentTarget.files === null) {
 			return
 		}
@@ -49,11 +49,5 @@
 	}
 </script>
 
-<input
-	bind:this={input}
-	type="file"
-	accept="image/*"
-	onchange={preventdefault(handleChange)}
-	class="hidden"
-/>
+<input bind:this={input} type="file" accept="image/*" onchange={preventdefault(handleChange)} class="hidden" />
 <button onclick={preventdefault(handleClick)}>選択</button>
