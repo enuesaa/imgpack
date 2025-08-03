@@ -1,0 +1,11 @@
+# rust
+/target
+
+# editor
+.vscode
+
+# misc
+.DS_Store
+
+# testdata
+*.png
