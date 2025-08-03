@@ -8,3 +8,12 @@ Web app to compress images
 ## How to develop
 1. `go generate ./...`
 2. `go run .`
+
+## Future Plan
+
+Rust で作り直そうかな
+
+- pngquant
+- mozjpeg
+
+こっちの方が圧縮率が高そう。
