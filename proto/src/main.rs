@@ -5,26 +5,13 @@ use oxipng::{InFile, Options, OutFile};
 
 fn main() -> Result<()> {
     let input_path = "input.png";
-    let output1_path = "output1.png";
-    let output2_path = "output2.png";
-    let output3_path = "output3.png";
-
-
-    let mut opts = Options::max_compression();
-    opts.interlace = None;
-    opts.strip = oxipng::StripChunks::All;
-
-    oxipng::optimize(
-        &InFile::Path(input_path.into()),
-        &OutFile::from_path(output1_path.into()),
-        &opts,
-    )?;
+    let output_path = "output.png";
 
     let palette_size = 256; // 減色後の色数
     println!("Reducing {} to {} colors...", input_path, palette_size);
 
     // 入力画像読み込み
-    let img = image::open(output1_path)?;
+    let img = image::open(input_path)?;
     let (width, height) = img.dimensions();
 
     // RGBAに変換
@@ -61,16 +48,18 @@ fn main() -> Result<()> {
     }
 
     // 保存
-    output_img.save(output2_path)?;
-    println!("Saved reduced-color image to {}", output2_path);
+    output_img.save(output_path)?;
+    println!("Saved reduced-color image to {}", output_path);
+
+    let outfile = "out.png";
 
     let mut opts = Options::max_compression();
     opts.interlace = None;
     opts.strip = oxipng::StripChunks::All;
 
     oxipng::optimize(
-        &InFile::Path(output2_path.into()),
-        &OutFile::from_path(output3_path.into()),
+        &InFile::Path(output_path.into()),
+        &OutFile::from_path(outfile.into()),
         &opts,
     )?;
 
