@@ -17,3 +17,6 @@ Rust で作り直そうかな
 - mozjpeg
 
 こっちの方が圧縮率が高そう。
+
+### トリガー
+Mac の Automator の Folder Action で呼び出す
