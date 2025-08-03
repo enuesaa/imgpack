@@ -18,7 +18,7 @@ fn main() -> Result<()> {
     let rgba_pixels: Vec<u8> = img.to_rgba8().into_vec();
 
     // NeuQuant で減色
-    let nq = NeuQuant::new(1, palette_size, &rgba_pixels);
+    let nq = NeuQuant::new(10, palette_size, &rgba_pixels);
 
     // 各ピクセルをパレットインデックスに置き換え
     let mut indexed_pixels = Vec::with_capacity((width * height) as usize);
