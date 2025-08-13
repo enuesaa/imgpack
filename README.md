@@ -11,12 +11,18 @@ Web app to compress images
 
 ## Future Plan
 
-Rust で作り直そうかな
+Rust で作り直す
 
-- pngquant
-- mozjpeg
+```bash
+cd proto
+touch input.png # サンプル画像をおく
+cargo run
 
-こっちの方が圧縮率が高そう。
+# tmp.png が減色した画像
+# output.png がそれを圧縮した画像
+```
+
+遅いけど tinypng とだいたい同じサイズ。品質は許容できるレベルかな。
 
 ### トリガー
 Mac の Automator の Folder Action で呼び出す
