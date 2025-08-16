@@ -7,7 +7,7 @@ use std::fs::File;
 pub fn compress_jpeg() -> Result<()> {
     let input_path = "input.jpg";
     let output_path = "output.jpg";
-    let quality = 75; // 0〜100、低いほど圧縮率高
+    let quality = 60; // 0〜100、低いほど圧縮率高
 
     let img = ImageReader::open(input_path)?.decode()?;
     let mut out_file = File::create(output_path)?;
