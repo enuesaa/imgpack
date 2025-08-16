@@ -1,13 +1,12 @@
+pub mod cli;
 pub mod pack;
 
-use clap::Parser;
-
-/// A CLI tool to compress png images.
-#[derive(Parser)]
-#[command(bin_name = "imgpack", version = "v0.0.1")]
-struct Args {}
+use cli::{CLI, CLIParser};
+use pack::pack::pack;
 
 fn main() {
-    Args::parse();
+    CLI::parse();
     println!("Hello!");
+
+    let _ = pack();
 }
