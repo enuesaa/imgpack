@@ -4,13 +4,10 @@ use image::{GenericImageView, ImageBuffer, Rgba, RgbaImage};
 use oxipng::{Options};
 use std::io::Cursor;
 
-pub fn pack() -> Result<()> {
-    let input_path = "input.png";
-    let output_path = "output.png";
+pub fn pack(filepath: String, output_filepath: String) -> Result<()> {
     let palette_size = 256; // 減色後の色数
-    println!("Reducing {} to {} colors...", input_path, palette_size);
 
-    let img = image::open(input_path)?;
+    let img = image::open(filepath)?;
     let (width, height) = img.dimensions();
 
     // RGBAへ変換
@@ -45,8 +42,6 @@ pub fn pack() -> Result<()> {
         let y = (i as u32) / width;
         tmp_img.put_pixel(x, y, palette[*idx as usize]);
     }
-
-    // ここでファイル保存せずにバイト列にする
     let mut buf = Vec::new();
     tmp_img.write_to(&mut Cursor::new(&mut buf), image::ImageFormat::Png)?;
 
@@ -56,6 +51,6 @@ pub fn pack() -> Result<()> {
     opts.strip = oxipng::StripChunks::All;
 
     let optimized = oxipng::optimize_from_memory(&buf, &opts)?;
-    std::fs::write(output_path, optimized)?;
+    std::fs::write(output_filepath, optimized)?;
     Ok(())
 }
