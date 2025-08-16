@@ -1,19 +1,28 @@
 pub mod cli;
 pub mod pack;
+pub mod fs;
 
-use std::path::Path;
-
+use anyhow::Result;
 use cli::{CLI, CLIParser};
+use fs::list::list;
 use pack::pack::pack;
+
+use crate::fs::out::calc_outpath;
 
 fn main() {
     CLI::parse();
 
-    let filepath = "input.png";
-    let path = Path::new(filepath);
-    let filestem = path.file_stem().unwrap().to_string_lossy();
-    let fileext = path.extension().unwrap().to_string_lossy();
-    let outputfilepath = format!("{}.out.{}", filestem, fileext);
+    let _ = handle_compress();
+}
 
-    let _ = pack(filepath.to_string(), outputfilepath);
+fn handle_compress() -> Result<()> {
+    let files = list()?;
+
+    for file in files.iter() {
+        println!("compress: {}", file.display());
+        let outpath = &calc_outpath(file)?;
+        pack(file, outpath)?;
+    }
+
+    Ok(())
 }

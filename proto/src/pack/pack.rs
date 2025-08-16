@@ -2,9 +2,9 @@ use anyhow::Result;
 use color_quant::NeuQuant;
 use image::{GenericImageView, ImageBuffer, Rgba, RgbaImage};
 use oxipng::{Options};
-use std::io::Cursor;
+use std::{io::Cursor, path::PathBuf};
 
-pub fn pack(filepath: String, output_filepath: String) -> Result<()> {
+pub fn pack(filepath: &PathBuf, output_filepath: &PathBuf) -> Result<()> {
     let palette_size = 256; // 減色後の色数
 
     let img = image::open(filepath)?;
