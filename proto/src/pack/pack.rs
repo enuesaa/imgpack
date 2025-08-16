@@ -1,11 +1,11 @@
 use anyhow::Result;
 use color_quant::NeuQuant;
 use image::{GenericImageView, ImageBuffer, Rgba, RgbaImage};
-use oxipng::{InFile, Options, OutFile};
+use oxipng::{Options};
+use std::io::Cursor;
 
 pub fn pack() -> Result<()> {
     let input_path = "input.png";
-    let tmp_path = "tmp.png";
     let output_path = "output.png";
     let palette_size = 256; // 減色後の色数
     println!("Reducing {} to {} colors...", input_path, palette_size);
@@ -18,7 +18,6 @@ pub fn pack() -> Result<()> {
 
     // NeuQuant で減色
     let nq = NeuQuant::new(10, palette_size, &rgba_pixels);
-    println!("completed step 1");
 
     // 各ピクセルをインデックス
     let mut indexed_pixels = Vec::with_capacity((width * height) as usize);
@@ -46,20 +45,17 @@ pub fn pack() -> Result<()> {
         let y = (i as u32) / width;
         tmp_img.put_pixel(x, y, palette[*idx as usize]);
     }
-    tmp_img.save(tmp_path)?;
-    println!("completed step 2");
+
+    // ここでファイル保存せずにバイト列にする
+    let mut buf = Vec::new();
+    tmp_img.write_to(&mut Cursor::new(&mut buf), image::ImageFormat::Png)?;
 
     // 圧縮
     let mut opts = Options::from_preset(3);
     opts.interlace = None;
     opts.strip = oxipng::StripChunks::All;
 
-    oxipng::optimize(
-        &InFile::Path(tmp_path.into()),
-        &OutFile::from_path(output_path.into()),
-        &opts,
-    )?;
-    println!("completed step 3");
-
+    let optimized = oxipng::optimize_from_memory(&buf, &opts)?;
+    std::fs::write(output_path, optimized)?;
     Ok(())
 }
