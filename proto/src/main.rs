@@ -8,11 +8,13 @@ use fs::list::list;
 use pack::pack::pack;
 
 use crate::fs::out::calc_outpath;
+use crate::pack::jpg::compress_jpeg;
 
 fn main() {
     CLI::parse();
+    let _ = compress_jpeg();
 
-    let _ = handle_compress();
+    // let _ = handle_compress();
 }
 
 fn handle_compress() -> Result<()> {
