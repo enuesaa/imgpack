@@ -10,9 +10,9 @@ Web app to compress images
 2. `go run .`
 
 ## Future Plan
-
 Rust で作り直す
 
+### プロトタイプ
 ```bash
 cd proto
 touch input.png # サンプル画像をおく
@@ -24,5 +24,12 @@ cargo run
 
 遅いけど tinypng とだいたい同じサイズ。品質は許容できるレベルかな。
 
-### トリガー
-Mac の Automator の Folder Action で呼び出す
+### Features
+- カレントディレクトリにある `*.{png,jpeg,jpg}` が対象
+  - 圧縮するロジックは形式により異なる
+  - まずは png から
+- オリジナルのファイルを残す
+  - オリジナル: `aaa.png`
+  - 圧縮後: `aaa.out.png`
+- トリガー
+  - Mac の Automator の Folder Action で呼び出す

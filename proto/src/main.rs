@@ -18,6 +18,7 @@ fn main() -> Result<()> {
 
     // NeuQuant で減色
     let nq = NeuQuant::new(10, palette_size, &rgba_pixels);
+    println!("completed step 1");
 
     // 各ピクセルをインデックス
     let mut indexed_pixels = Vec::with_capacity((width * height) as usize);
@@ -46,9 +47,10 @@ fn main() -> Result<()> {
         tmp_img.put_pixel(x, y, palette[*idx as usize]);
     }
     tmp_img.save(tmp_path)?;
+    println!("completed step 2");
 
     // 圧縮
-    let mut opts = Options::max_compression();
+    let mut opts = Options::from_preset(3);
     opts.interlace = None;
     opts.strip = oxipng::StripChunks::All;
 
@@ -57,6 +59,7 @@ fn main() -> Result<()> {
         &OutFile::from_path(output_path.into()),
         &opts,
     )?;
+    println!("completed step 3");
 
     Ok(())
 }
