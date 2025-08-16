@@ -1,7 +1,7 @@
 use std::fs;
 
-use std::path::PathBuf;
 use anyhow::Result;
+use std::path::PathBuf;
 
 pub fn list() -> Result<Vec<PathBuf>> {
     let files = list_files_in_current_dir()?;
@@ -12,7 +12,7 @@ pub fn list() -> Result<Vec<PathBuf>> {
 
 fn list_files_in_current_dir() -> Result<Vec<PathBuf>> {
     let mut ret = Vec::new();
- 
+
     for entry in fs::read_dir(".")? {
         let entry = entry?;
         let path = entry.path();

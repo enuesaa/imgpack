@@ -1,9 +1,9 @@
 pub mod cli;
-pub mod pack;
 pub mod fs;
+pub mod pack;
 
 use anyhow::Result;
-use cli::{CLI, CLIParser};
+use cli::{CLIParser, CLI};
 use fs::list::list;
 use pack::pack::pack;
 

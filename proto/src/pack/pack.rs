@@ -1,7 +1,7 @@
 use anyhow::Result;
 use color_quant::NeuQuant;
 use image::{GenericImageView, ImageBuffer, Rgba, RgbaImage};
-use oxipng::{Options};
+use oxipng::Options;
 use std::{io::Cursor, path::PathBuf};
 
 pub fn pack(filepath: &PathBuf, output_filepath: &PathBuf) -> Result<()> {
