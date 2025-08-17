@@ -1,18 +1,19 @@
-pub mod cli;
-pub mod fs;
-pub mod pack;
+mod cli;
+mod fs;
+mod pack;
 
 use anyhow::Result;
 use cli::{CLIParser, CLI};
-use fs::list::list;
-use fs::compressable::Ext;
-use pack::png::pack_png;
-use pack::jpg::pack_jpg;
+use fs::{list, Ext};
+use pack::{pack_jpg, pack_png};
 
 fn main() {
     let cli = CLI::parse();
 
-    let _ = handle_compress(cli);
+    if let Err(e) = handle_compress(cli) {
+        eprintln!("Error: {}", e);
+        std::process::exit(1);
+    }
 }
 
 fn handle_compress(cli: CLI) -> Result<()> {

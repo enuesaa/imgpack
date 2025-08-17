@@ -2,9 +2,9 @@ use anyhow::Result;
 use color_quant::NeuQuant;
 use image::{GenericImageView, ImageBuffer, Rgba, RgbaImage};
 use oxipng::Options;
-use std::{io::Cursor};
+use std::io::Cursor;
 
-use crate::fs::compressable::Compressable;
+use crate::fs::Compressable;
 
 pub fn pack_png(file: &Compressable) -> Result<()> {
     let inpath = file.path();
