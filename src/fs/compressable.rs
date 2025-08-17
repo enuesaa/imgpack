@@ -1,8 +1,5 @@
 use anyhow::{anyhow, Ok, Result};
-use std::{
-    default,
-    path::{Path, PathBuf},
-};
+use std::{fmt, path::PathBuf};
 
 use crate::fs::{ext::calc_ext, out::calc_outpath};
 
@@ -39,3 +36,13 @@ impl Compressable {
         calc_outpath(&self.path)
     }
 }
+
+impl fmt::Display for Compressable {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self.path.file_name() {
+            Some(name) => write!(f, "{}", name.to_string_lossy()),
+            None => write!(f, "<unknown>"),
+        }
+    }
+}
+

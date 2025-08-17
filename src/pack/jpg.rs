@@ -6,7 +6,7 @@ use std::fs::File;
 
 use crate::fs::compressable::Compressable;
 
-pub fn compress_jpg(file: &Compressable) -> Result<()> {
+pub fn pack_jpg(file: &Compressable) -> Result<()> {
     let inpath = file.path();
     let outpath = file.outpath()?;
 

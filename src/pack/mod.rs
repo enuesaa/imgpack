@@ -1,2 +1,2 @@
 pub mod jpg;
-pub mod pack;
+pub mod png;
