@@ -1,5 +1,5 @@
-use std::path::PathBuf;
 use anyhow::{anyhow, Result};
+use std::path::PathBuf;
 
 pub fn calc_outpath(file: &PathBuf) -> Result<PathBuf> {
     let stem = file

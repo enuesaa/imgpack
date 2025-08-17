@@ -3,11 +3,17 @@ use std::fs;
 use anyhow::Result;
 use std::path::PathBuf;
 
-pub fn list() -> Result<Vec<PathBuf>> {
+use crate::fs::compressable::Compressable;
+
+pub fn list() -> Result<Vec<Compressable>> {
     let files = list_files_in_current_dir()?;
     let targets = filter_compress_target(files);
 
-    Ok(targets)
+    let compressables = targets
+        .iter()
+        .map(|a| Compressable::from(a.to_path_buf()))
+        .collect();
+    Ok(compressables)
 }
 
 fn list_files_in_current_dir() -> Result<Vec<PathBuf>> {

@@ -4,10 +4,15 @@ use image::{GenericImageView, ImageBuffer, Rgba, RgbaImage};
 use oxipng::Options;
 use std::{io::Cursor, path::PathBuf};
 
-pub fn pack(filepath: &PathBuf, output_filepath: &PathBuf) -> Result<()> {
+use crate::fs::compressable::Compressable;
+
+pub fn pack(file: &Compressable) -> Result<()> {
+    let inpath = file.path();
+    let outpath = file.outpath()?;
+
     let palette_size = 256; // 減色後の色数
 
-    let img = image::open(filepath)?;
+    let img = image::open(inpath)?;
     let (width, height) = img.dimensions();
 
     // RGBAへ変換
@@ -51,6 +56,6 @@ pub fn pack(filepath: &PathBuf, output_filepath: &PathBuf) -> Result<()> {
     opts.strip = oxipng::StripChunks::All;
 
     let optimized = oxipng::optimize_from_memory(&buf, &opts)?;
-    std::fs::write(output_filepath, optimized)?;
+    std::fs::write(outpath, optimized)?;
     Ok(())
 }

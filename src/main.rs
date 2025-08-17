@@ -2,12 +2,14 @@ pub mod cli;
 pub mod fs;
 pub mod pack;
 
+use core::panic;
+
 use anyhow::Result;
 use cli::{CLIParser, CLI};
 use fs::list::list;
 use pack::pack::pack;
 
-use crate::fs::out::calc_outpath;
+use crate::fs::compressable::Ext;
 use crate::pack::jpg::compress_jpg;
 
 fn main() {
@@ -20,15 +22,14 @@ fn handle_compress() -> Result<()> {
     let files = list()?;
 
     for file in files.iter() {
-        println!("compress: {}", file.display());
-        let outpath = &calc_outpath(file)?;
+        // println!("compress: {}", file.display());
 
-        if file.to_string_lossy().ends_with("png") {
-            pack(file, outpath)?;
-        } else {
-            compress_jpg(file, outpath)?;
-        }
+        let ext = file.ext()?;
+
+        match ext {
+            Ext::Jpg => compress_jpg(file)?,
+            Ext::Png => pack(file)?,
+        };
     }
-
     Ok(())
 }
