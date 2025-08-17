@@ -3,3 +3,10 @@
 
 # editor
 .vscode
+
+# rust
+/target
+
+# testdata
+*.png
+*.jpg
