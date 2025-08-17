@@ -3,10 +3,14 @@ name: ci
 on:
   push:
     branches:
-      - main
+      - '*'
 
 jobs:
-  ci:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+
+      - run: cargo build
+      - run: cargo test
