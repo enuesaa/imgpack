@@ -28,7 +28,14 @@ fn filter_compress_target(files: Vec<PathBuf>) -> Vec<PathBuf> {
         .into_iter()
         .filter(|path| {
             if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-                name.ends_with(".png") && !name.contains(".out.")
+                name.ends_with(".png") || name.ends_with(".jpg") || name.ends_with(".jpeg")
+            } else {
+                false
+            }
+        })
+        .filter(|path| {
+            if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
+                !name.contains(".out.")
             } else {
                 false
             }

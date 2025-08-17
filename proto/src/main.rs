@@ -12,9 +12,8 @@ use crate::pack::jpg::compress_jpeg;
 
 fn main() {
     CLI::parse();
-    let _ = compress_jpeg();
 
-    // let _ = handle_compress();
+    let _ = handle_compress();
 }
 
 fn handle_compress() -> Result<()> {
@@ -23,7 +22,12 @@ fn handle_compress() -> Result<()> {
     for file in files.iter() {
         println!("compress: {}", file.display());
         let outpath = &calc_outpath(file)?;
-        pack(file, outpath)?;
+
+        if file.to_string_lossy().ends_with("png") {
+            pack(file, outpath)?;
+        } else {
+            compress_jpeg(file, outpath)?;
+        }
     }
 
     Ok(())

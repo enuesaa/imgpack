@@ -1,16 +1,15 @@
 use anyhow::Result;
 use image::ExtendedColorType;
-use image::{io::Reader as ImageReader};
-use image::codecs::jpeg::{JpegEncoder};
+use image::ImageReader;
+use image::codecs::jpeg::JpegEncoder;
 use std::fs::File;
+use std::path::PathBuf;
 
-pub fn compress_jpeg() -> Result<()> {
-    let input_path = "input.jpg";
-    let output_path = "output.jpg";
+pub fn compress_jpeg(filepath: &PathBuf, output_filepath: &PathBuf) -> Result<()> {
     let quality = 60; // 0〜100、低いほど圧縮率高
 
-    let img = ImageReader::open(input_path)?.decode()?;
-    let mut out_file = File::create(output_path)?;
+    let img = ImageReader::open(filepath)?.decode()?;
+    let mut out_file = File::create(output_filepath)?;
 
     // RGB8 に変換
     let rgb = img.to_rgb8();
