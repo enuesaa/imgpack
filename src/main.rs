@@ -8,7 +8,7 @@ use fs::list::list;
 use pack::pack::pack;
 
 use crate::fs::out::calc_outpath;
-use crate::pack::jpg::compress_jpeg;
+use crate::pack::jpg::compress_jpg;
 
 fn main() {
     CLI::parse();
@@ -26,7 +26,7 @@ fn handle_compress() -> Result<()> {
         if file.to_string_lossy().ends_with("png") {
             pack(file, outpath)?;
         } else {
-            compress_jpeg(file, outpath)?;
+            compress_jpg(file, outpath)?;
         }
     }
 

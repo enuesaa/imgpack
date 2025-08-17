@@ -1,12 +1,13 @@
 use anyhow::Result;
+use image::codecs::jpeg::JpegEncoder;
 use image::ExtendedColorType;
 use image::ImageReader;
-use image::codecs::jpeg::JpegEncoder;
 use std::fs::File;
 use std::path::PathBuf;
 
-pub fn compress_jpeg(filepath: &PathBuf, output_filepath: &PathBuf) -> Result<()> {
-    let quality = 60; // 0〜100、低いほど圧縮率高
+pub fn compress_jpg(filepath: &PathBuf, output_filepath: &PathBuf) -> Result<()> {
+    // 0〜100、低いほど圧縮率高
+    let quality = 60;
 
     let img = ImageReader::open(filepath)?.decode()?;
     let mut out_file = File::create(output_filepath)?;

@@ -10,3 +10,5 @@
 # testdata
 *.png
 *.jpg
+!testdata/*.png
+!testdata/*.jpg
