@@ -8,7 +8,5 @@
 /target
 
 # testdata
-*.png
-*.jpg
-!testdata/*.png
-!testdata/*.jpg
+testdata/*.out.png
+testdata/*.out.jpg

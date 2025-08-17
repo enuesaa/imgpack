@@ -10,13 +10,13 @@ use pack::png::pack_png;
 use pack::jpg::pack_jpg;
 
 fn main() {
-    CLI::parse();
+    let cli = CLI::parse();
 
-    let _ = handle_compress();
+    let _ = handle_compress(cli);
 }
 
-fn handle_compress() -> Result<()> {
-    let files = list()?;
+fn handle_compress(cli: CLI) -> Result<()> {
+    let files = list(&cli.path)?;
 
     for file in files.iter() {
         println!("compress: {}", file);
