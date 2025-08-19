@@ -10,8 +10,18 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-
       - uses: dtolnay/rust-toolchain@stable
 
       - run: cargo build
       - run: cargo test
+
+  real:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+
+      - run: cargo install
+      - run: imgpack testdata
+
+      - run: ls -la testdata
