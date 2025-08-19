@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
 
-      - run: cargo install
-      - run: imgpack testdata
+      - run: cargo install --path .
 
+      - run: imgpack testdata
       - run: ls -la testdata
