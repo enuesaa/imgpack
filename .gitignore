@@ -6,6 +6,7 @@
 
 # rust
 /target
+/dist
 
 # testdata
 testdata/*.out.png
