@@ -3,8 +3,8 @@ mod fs;
 mod pack;
 
 use anyhow::Result;
-use cli::{CLIParser, CLI};
-use fs::{list, Ext};
+use cli::{CLI, CLIParser};
+use fs::{Ext, list};
 use pack::{pack_jpg, pack_png};
 
 fn main() {
