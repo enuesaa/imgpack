@@ -1,23 +1,14 @@
-mod cli;
 mod fs;
 mod pack;
 
+use std::path::PathBuf;
+
 use anyhow::Result;
-use cli::{CLI, CLIParser};
 use fs::{Ext, list};
 use pack::{pack_jpg, pack_png};
 
-fn main() {
-    let cli = CLI::parse();
-
-    if let Err(e) = handle_compress(cli) {
-        eprintln!("Error: {}", e);
-        std::process::exit(1);
-    }
-}
-
-fn handle_compress(cli: CLI) -> Result<()> {
-    let files = list(&cli.path)?;
+pub fn handle_compress(path: PathBuf) -> Result<()> {
+    let files = list(&path)?;
 
     for file in files.iter() {
         println!("compress: {}", file);
