@@ -5,7 +5,7 @@ use std::path::PathBuf;
 
 use crate::fs::compressable::Compressable;
 
-pub fn list(path: &PathBuf) -> Result<Vec<Compressable>> {
+pub fn list_compressables(path: &PathBuf) -> Result<Vec<Compressable>> {
     let files = list_files_in_dir(path)?;
     let targets = filter_compress_target(files);
 

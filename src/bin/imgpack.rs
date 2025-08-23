@@ -1,7 +1,7 @@
 use clap::{Parser, crate_version};
 use std::path::PathBuf;
 
-use imgpack::handle_compress;
+use imgpack::compress_dir;
 
 /// A CLI tool to compress png/jpg images.
 #[derive(Parser)]
@@ -24,7 +24,7 @@ fn main() {
         return;
     }
 
-    if let Err(e) = handle_compress(args.path) {
+    if let Err(e) = compress_dir(args.path) {
         eprintln!("Error: {}", e);
         std::process::exit(1);
     }

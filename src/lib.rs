@@ -4,11 +4,11 @@ mod pack;
 use std::path::PathBuf;
 
 use anyhow::Result;
-use fs::{Ext, list};
+use fs::{Ext, list_compressables};
 use pack::{pack_jpg, pack_png};
 
-pub fn handle_compress(path: PathBuf) -> Result<()> {
-    let files = list(&path)?;
+pub fn compress_dir(path: PathBuf) -> Result<()> {
+    let files = list_compressables(&path)?;
 
     for file in files.iter() {
         println!("compress: {}", file);
