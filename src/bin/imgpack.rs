@@ -24,7 +24,7 @@ fn main() {
         return;
     }
 
-    if let Err(e) = compress_dir(args.path) {
+    if let Err(e) = compress_dir(args.path, &mut std::io::stdout()) {
         eprintln!("Error: {}", e);
         std::process::exit(1);
     }
