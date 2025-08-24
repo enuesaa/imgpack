@@ -1,6 +1,5 @@
-use std::fs;
-
 use anyhow::Result;
+use std::fs;
 
 use crate::fs::Compressable;
 

@@ -12,8 +12,8 @@ Rust で作り直す
   - 圧縮するロジックは形式により異なる
   - まずは png から
 - オリジナルのファイルを残す
-  - オリジナル: `aaa.png`
-  - 圧縮後: `aaa.out.png`
+  - オリジナル: `aaa.original.png`
+  - 圧縮: `aaa.png`
 - 遅いけど tinypng とだいたい同じサイズ。品質は許容できるレベルかな。
 - トリガー
   - Mac の Automator の Folder Action で呼び出す

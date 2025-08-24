@@ -1,7 +1,6 @@
-use std::{collections::HashSet, fs};
-
 use anyhow::Result;
 use std::path::PathBuf;
+use std::{collections::HashSet, fs};
 
 use crate::fs::{compressable::Compressable, original::calc_originalpath};
 
@@ -78,7 +77,7 @@ mod tests {
     #[test]
     fn test_filter_compress_target() {
         let files = vec![
-            PathBuf::from("a.png"), // 圧縮済みなのでスキップ
+            PathBuf::from("a.png"),          // 圧縮済みなのでスキップ
             PathBuf::from("a.original.png"), // オリジナルファイルなのでスキップ
             PathBuf::from("b.jpg"),
             PathBuf::from("c.png"),
