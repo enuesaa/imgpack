@@ -1,7 +1,7 @@
 use anyhow::{Ok, Result, bail};
 use std::{fmt, path::PathBuf};
 
-use crate::fs::{ext::calc_ext, out::calc_outpath};
+use crate::fs::{ext::calc_ext, original::calc_originalpath};
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Ext {
@@ -32,8 +32,12 @@ impl Compressable {
         }
     }
 
-    pub fn outpath(&self) -> Result<PathBuf> {
-        calc_outpath(&self.path)
+    pub fn outpath(&self) -> PathBuf {
+        self.path.clone()
+    }
+
+    pub fn originalpath(&self) -> Result<PathBuf> {
+        calc_originalpath(&self.path)
     }
 }
 

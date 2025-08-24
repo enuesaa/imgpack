@@ -41,7 +41,7 @@ fn filter_compress_target(files: Vec<PathBuf>) -> Vec<PathBuf> {
         })
         .filter(|path| {
             if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-                !name.contains(".out.")
+                !name.contains(".original.")
             } else {
                 false
             }

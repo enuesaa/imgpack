@@ -1,7 +1,7 @@
 mod compressable;
 mod ext;
 mod list;
-mod out;
+mod original;
 
 pub use compressable::Compressable;
 pub use compressable::Ext;

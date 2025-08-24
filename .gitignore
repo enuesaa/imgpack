@@ -9,5 +9,5 @@
 /dist
 
 # testdata
-testdata/*.out.png
-testdata/*.out.jpg
+testdata/*.original.png
+testdata/*.original.jpg
