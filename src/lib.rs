@@ -1,21 +1,24 @@
+pub mod context;
 mod fs;
 mod pack;
 
 use anyhow::Result;
+use context::Context;
+pub use context::create_cli_context;
 use fs::{Compressable, Ext, list_compressables};
 use pack::{onafter_compare, onbefore_log, onbefore_rename, pack_jpg, pack_png};
-use std::{io::Write, path::PathBuf};
+use std::path::PathBuf;
 
-pub fn compress_dir<W: Write>(path: PathBuf, logger: &mut W) -> Result<()> {
+pub fn compress_dir(ctx: &mut Context, path: PathBuf) -> Result<()> {
     let files = list_compressables(&path)?;
     for file in files.iter() {
-        compress_file(file, logger)?;
+        compress_file(ctx, file)?;
     }
     Ok(())
 }
 
-pub fn compress_file<W: Write>(file: &Compressable, logger: &mut W) -> Result<()> {
-    onbefore_log(file, logger)?;
+pub fn compress_file(ctx: &mut Context, file: &Compressable) -> Result<()> {
+    onbefore_log(ctx, file)?;
     onbefore_rename(file)?;
 
     match file.ext()? {
@@ -23,6 +26,6 @@ pub fn compress_file<W: Write>(file: &Compressable, logger: &mut W) -> Result<()
         Ext::Png => pack_png(file)?,
     };
 
-    onafter_compare(file, logger)?;
+    onafter_compare(ctx, file)?;
     Ok(())
 }
