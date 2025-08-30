@@ -43,13 +43,17 @@ impl Compressable {
     pub fn get_original_filesize(&self) -> Result<u64> {
         let path = self.originalpath()?;
         let metadata = fs::metadata(path)?;
-        Ok(metadata.len())
+        let filesize_bytes = metadata.len();
+        let filesize_kb = (filesize_bytes as f64 / 1000.0).round() as u64;
+        Ok(filesize_kb)
     }
 
     pub fn get_out_filesize(&self) -> Result<u64> {
         let path = self.outpath();
         let metadata = fs::metadata(path)?;
-        Ok(metadata.len())
+        let filesize_bytes = metadata.len();
+        let filesize_kb = (filesize_bytes as f64 / 1000.0).round() as u64;
+        Ok(filesize_kb)
     }
 }
 
