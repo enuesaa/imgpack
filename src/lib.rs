@@ -3,9 +3,9 @@ mod fs;
 mod pack;
 
 use anyhow::Result;
-pub use context::create_cli_context;
 use context::Context;
-use fs::{list_compressables, Compressable, Ext};
+pub use context::create_cli_context;
+use fs::{Compressable, Ext, list_compressables};
 use pack::{onafter_compare, onbefore_log, onbefore_setup, pack_jpg, pack_png};
 use std::path::PathBuf;
 

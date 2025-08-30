@@ -1,4 +1,4 @@
-use anyhow::{bail, Ok, Result};
+use anyhow::{Ok, Result, bail};
 use std::{fmt, fs, path::PathBuf};
 
 use crate::fs::{ext::calc_ext, filesize::get_filesize, original::calc_originalpath};
@@ -16,7 +16,10 @@ pub struct Compressable {
 
 impl Compressable {
     pub fn from(path: PathBuf) -> Self {
-        Self { path, started: false }
+        Self {
+            path,
+            started: false,
+        }
     }
 
     pub fn ext(&self) -> Result<Ext> {

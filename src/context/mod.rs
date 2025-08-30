@@ -1,3 +1,3 @@
 mod context;
 
-pub use context::{create_cli_context, Context};
+pub use context::{Context, create_cli_context};

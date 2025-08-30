@@ -1,4 +1,4 @@
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use std::path::PathBuf;
 
 pub fn calc_ext(file: &PathBuf) -> Result<String> {
