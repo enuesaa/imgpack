@@ -1,9 +1,9 @@
-mod after;
-mod jpg;
-mod png;
-mod pre;
+mod extjpg;
+mod extpng;
+mod onafter;
+mod onbefore;
 
-pub use after::compare_filesize;
-pub use jpg::pack_jpg;
-pub use png::pack_png;
-pub use pre::rename_original;
+pub use extjpg::pack_jpg;
+pub use extpng::pack_png;
+pub use onafter::onafter_compare;
+pub use onbefore::{onbefore_log, onbefore_rename};

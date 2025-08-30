@@ -40,11 +40,11 @@ impl Compressable {
         calc_originalpath(&self.path)
     }
 
-    pub fn get_insize(&self) -> Result<u64> {
+    pub fn get_insize(&self) -> Result<f64> {
         Ok(get_filesize(&self.inpath()?)?)
     }
 
-    pub fn get_outsize(&self) -> Result<u64> {
+    pub fn get_outsize(&self) -> Result<f64> {
         Ok(get_filesize(&self.outpath())?)
     }
 }
