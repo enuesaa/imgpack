@@ -6,7 +6,7 @@ use std::fs::File;
 use crate::fs::Compressable;
 
 pub fn pack_jpg(file: &Compressable) -> Result<()> {
-    let inpath = file.originalpath()?;
+    let inpath = file.inpath()?;
     let outpath = file.outpath();
 
     // 0〜100、低いほど圧縮率高

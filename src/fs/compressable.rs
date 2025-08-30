@@ -1,7 +1,7 @@
 use anyhow::{Ok, Result, bail};
-use std::{fmt, fs, path::PathBuf};
+use std::{fmt, path::PathBuf};
 
-use crate::fs::{ext::calc_ext, original::calc_originalpath};
+use crate::fs::{ext::calc_ext, filesize::get_filesize, original::calc_originalpath};
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Ext {
@@ -36,24 +36,16 @@ impl Compressable {
         self.path.clone()
     }
 
-    pub fn originalpath(&self) -> Result<PathBuf> {
+    pub fn inpath(&self) -> Result<PathBuf> {
         calc_originalpath(&self.path)
     }
 
-    pub fn get_original_filesize(&self) -> Result<u64> {
-        let path = self.originalpath()?;
-        let metadata = fs::metadata(path)?;
-        let filesize_bytes = metadata.len();
-        let filesize_kb = (filesize_bytes as f64 / 1000.0).round() as u64;
-        Ok(filesize_kb)
+    pub fn get_insize(&self) -> Result<u64> {
+        Ok(get_filesize(&self.inpath()?)?)
     }
 
-    pub fn get_out_filesize(&self) -> Result<u64> {
-        let path = self.outpath();
-        let metadata = fs::metadata(path)?;
-        let filesize_bytes = metadata.len();
-        let filesize_kb = (filesize_bytes as f64 / 1000.0).round() as u64;
-        Ok(filesize_kb)
+    pub fn get_outsize(&self) -> Result<u64> {
+        Ok(get_filesize(&self.outpath())?)
     }
 }
 

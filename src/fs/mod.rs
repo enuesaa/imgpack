@@ -1,5 +1,6 @@
 mod compressable;
 mod ext;
+mod filesize;
 mod list;
 mod original;
 

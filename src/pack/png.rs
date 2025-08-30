@@ -7,7 +7,7 @@ use std::io::Cursor;
 use crate::fs::Compressable;
 
 pub fn pack_png(file: &Compressable) -> Result<()> {
-    let inpath = file.originalpath()?;
+    let inpath = file.inpath()?;
     let outpath = file.outpath();
 
     let palette_size = 256; // 減色後の色数
