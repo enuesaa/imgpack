@@ -7,7 +7,7 @@ use crate::fs::Compressable;
 
 pub fn pack_jpg(file: &Compressable) -> Result<()> {
     let inpath = file.inpath()?;
-    let outpath = file.outpath();
+    let outpath = file.outpath()?;
 
     // 0〜100、低いほど圧縮率高
     let quality = 60;

@@ -1,4 +1,4 @@
-use anyhow::{Result, anyhow};
+use anyhow::{anyhow, Result};
 use std::path::PathBuf;
 
 pub fn calc_originalpath(file: &PathBuf) -> Result<PathBuf> {

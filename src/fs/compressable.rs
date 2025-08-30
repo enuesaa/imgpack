@@ -1,5 +1,5 @@
-use anyhow::{Ok, Result, bail};
-use std::{fmt, path::PathBuf};
+use anyhow::{bail, Ok, Result};
+use std::{fmt, fs, path::PathBuf};
 
 use crate::fs::{ext::calc_ext, filesize::get_filesize, original::calc_originalpath};
 
@@ -11,15 +11,12 @@ pub enum Ext {
 
 pub struct Compressable {
     path: PathBuf,
+    started: bool,
 }
 
 impl Compressable {
     pub fn from(path: PathBuf) -> Self {
-        Self { path }
-    }
-
-    pub fn path(&self) -> PathBuf {
-        self.path.clone()
+        Self { path, started: false }
     }
 
     pub fn ext(&self) -> Result<Ext> {
@@ -32,12 +29,36 @@ impl Compressable {
         }
     }
 
-    pub fn outpath(&self) -> PathBuf {
-        self.path.clone()
+    // Example: `a.png`
+    pub fn initpath(&self) -> Result<PathBuf> {
+        if self.started {
+            bail!("compression started");
+        };
+        Ok(self.path.clone())
     }
 
+    pub fn setup(&mut self) -> Result<()> {
+        if self.started {
+            bail!("compression started");
+        };
+        self.started = true;
+
+        let from = self.path.clone();
+        let to = self.inpath()?;
+        Ok(fs::rename(from, to)?)
+    }
+
+    // Example: `a.original.png`
     pub fn inpath(&self) -> Result<PathBuf> {
         calc_originalpath(&self.path)
+    }
+
+    // Example: `a.png`
+    pub fn outpath(&self) -> Result<PathBuf> {
+        if !self.started {
+            bail!("compression not started");
+        };
+        Ok(self.path.clone())
     }
 
     pub fn get_insize(&self) -> Result<f64> {
@@ -45,7 +66,7 @@ impl Compressable {
     }
 
     pub fn get_outsize(&self) -> Result<f64> {
-        Ok(get_filesize(&self.outpath())?)
+        Ok(get_filesize(&self.outpath()?)?)
     }
 }
 
