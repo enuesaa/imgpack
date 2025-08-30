@@ -1,5 +1,5 @@
 use anyhow::{Ok, Result, bail};
-use std::{fmt, path::PathBuf};
+use std::{fmt, fs, path::PathBuf};
 
 use crate::fs::{ext::calc_ext, original::calc_originalpath};
 
@@ -38,6 +38,18 @@ impl Compressable {
 
     pub fn originalpath(&self) -> Result<PathBuf> {
         calc_originalpath(&self.path)
+    }
+
+    pub fn get_original_filesize(&self) -> Result<u64> {
+        let path = self.originalpath()?;
+        let metadata = fs::metadata(path)?;
+        Ok(metadata.len())
+    }
+
+    pub fn get_out_filesize(&self) -> Result<u64> {
+        let path = self.outpath();
+        let metadata = fs::metadata(path)?;
+        Ok(metadata.len())
     }
 }
 
