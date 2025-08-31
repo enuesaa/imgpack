@@ -40,7 +40,7 @@ impl Compressable {
         Ok(self.path.clone())
     }
 
-    pub fn setup(&mut self) -> Result<()> {
+    pub fn setup_compression(&mut self) -> Result<()> {
         if self.started {
             bail!("compression started");
         };
