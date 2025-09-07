@@ -36,6 +36,10 @@ pub fn backup(inpath: &PathBuf) -> Result<()> {
 pub fn list_backuped_files() -> Result<Vec<PathBuf>> {
     let dir = get_backup_dir()?;
     let mut ret = Vec::new();
+
+    if let Ok(is) = fs::exists(dir.clone()) && !is {
+        return Ok(ret);
+    }
     for entry in fs::read_dir(dir)? {
         let path = entry?.path();
         if path.is_file() {
