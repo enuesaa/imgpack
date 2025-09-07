@@ -22,6 +22,9 @@ pub fn calc_backup_path(file: &PathBuf) -> Result<PathBuf> {
 
 fn mk_backup_dir() -> Result<()> {
     let dir = get_backup_dir()?;
+    if let Ok(is) = fs::exists(dir.clone()) && is {
+        return Ok(());
+    }
     let _ = fs::create_dir(dir)?;
     Ok(())
 }
@@ -29,6 +32,9 @@ fn mk_backup_dir() -> Result<()> {
 pub fn backup(inpath: &PathBuf) -> Result<()> {
     mk_backup_dir()?;
     let backup_path = calc_backup_path(inpath)?;
+    if let Ok(is) = fs::exists(backup_path.clone()) && is {
+        fs::remove_file(backup_path.clone())?;
+    }
     let _ = fs::copy(inpath, backup_path)?;
     Ok(())
 }
@@ -37,7 +43,8 @@ pub fn list_backuped_files() -> Result<Vec<PathBuf>> {
     let dir = get_backup_dir()?;
     let mut ret = Vec::new();
 
-    if let Ok(is) = fs::exists(dir.clone()) && !is {
+    let is = fs::exists(dir.clone());
+    if is.is_err() || is.is_ok_and(|v| !v) {
         return Ok(ret);
     }
     for entry in fs::read_dir(dir)? {

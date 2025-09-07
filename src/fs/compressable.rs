@@ -1,5 +1,5 @@
 use anyhow::{Ok, Result, bail};
-use std::fmt;
+use std::{fmt, fs};
 use std::path::PathBuf;
 
 use crate::fs::backup;
@@ -41,15 +41,20 @@ impl Compressable {
         };
         self.started = true;
 
-        backup::backup(&self.inpath()?)
+        backup::backup(&self.path.clone())?;
+        fs::remove_file(&self.path.clone())?;
+        Ok(())
     }
 
-    pub fn backuppath(&self) -> Result<PathBuf> {
+    fn backuppath(&self) -> Result<PathBuf> {
         backup::calc_backup_path(&self.path)
     }
 
     // Example: `a.png`
     pub fn inpath(&self) -> Result<PathBuf> {
+        if self.started {
+            return Ok(self.backuppath()?);
+        };
         Ok(self.path.clone())
     }
 
