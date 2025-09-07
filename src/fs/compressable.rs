@@ -2,9 +2,9 @@ use anyhow::{Ok, Result, bail};
 use std::fmt;
 use std::path::PathBuf;
 
+use crate::fs::backup;
 use crate::fs::ext::calc_ext;
 use crate::fs::filesize::get_filesize;
-use crate::fs::backup;
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Ext {

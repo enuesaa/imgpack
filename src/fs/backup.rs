@@ -1,7 +1,7 @@
 use anyhow::{Result, anyhow};
-use std::path::PathBuf;
-use std::fs;
 use std::env;
+use std::fs;
+use std::path::PathBuf;
 
 fn get_backup_dir() -> Result<PathBuf> {
     let home = env::home_dir().ok_or_else(|| anyhow!("failed to get home dir"))?;

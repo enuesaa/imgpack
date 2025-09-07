@@ -1,6 +1,6 @@
 use anyhow::Result;
-use std::path::PathBuf;
 use std::fs;
+use std::path::PathBuf;
 
 use crate::fs::compressable::Compressable;
 
