@@ -43,9 +43,11 @@ mod tests {
 
     #[test]
     fn test_calc_backup_path() {
-        let input = PathBuf::from("/some/path/file.txt");
-        let expected = PathBuf::from("/a/.imgpack/file.txt");
-        assert_eq!(calc_backup_path(&input).unwrap(), expected);
+        temp_env::with_var("HOME", Some("/home"), || {
+            let input = PathBuf::from("/some/path/file.txt");
+            let expected = PathBuf::from("/home/.imgpack/file.txt");
+            assert_eq!(calc_backup_path(&input).unwrap(), expected);
+        });
     }
 
     #[test]
