@@ -1,12 +1,25 @@
 use anyhow::{Result, anyhow};
 use std::path::PathBuf;
-use std;
+use std::{self, fs};
 use std::env;
 
-pub fn get_backup_dir() -> Result<PathBuf> {
+fn get_backup_dir() -> Result<PathBuf> {
     let home = env::home_dir().ok_or_else(|| anyhow!("failed to get home dir"))?;
     let dir = home.join(".imgpack");
     Ok(dir)
+}
+
+fn mk_backup_dir() -> Result<()> {
+    let dir = get_backup_dir()?;
+    let _ = fs::create_dir(dir)?;
+    Ok(())
+}
+
+pub fn backup(inpath: &PathBuf) -> Result<()> {
+    mk_backup_dir()?;
+    let backup_path = calc_backup_path(inpath)?;
+    let _ = fs::copy(inpath, backup_path)?;
+    Ok(())
 }
 
 pub fn calc_backup_path(file: &PathBuf) -> Result<PathBuf> {
