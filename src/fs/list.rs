@@ -7,7 +7,7 @@ use crate::fs::compressable::Compressable;
 
 pub fn list_compressables(path: &PathBuf) -> Result<Vec<Compressable>> {
     let files = list_files_in_dir(path)?;
-    let backuped = backup::list_backuped_files()?;
+    let backuped = backup::list_backuped()?;
     let targets = filter_compress_target(files, backuped);
 
     let compressables = targets

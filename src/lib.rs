@@ -12,7 +12,7 @@ pub fn compress_dir(ctx: &mut Context, path: PathBuf) -> Result<()> {
     for file in files.iter_mut() {
         compress_file(ctx, file)?;
     }
-    fs::remove_old_backups()?;
+    fs::rm_old_backups()?;
     Ok(())
 }
 

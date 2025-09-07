@@ -4,19 +4,11 @@ use std::fs;
 use std::path::PathBuf;
 use std::time;
 
+/* backup dir */
 fn get_backup_dir() -> Result<PathBuf> {
     let home = env::home_dir().ok_or_else(|| anyhow!("failed to get home dir"))?;
     let dir = home.join(".imgpack");
     Ok(dir)
-}
-
-pub fn calc_backup_path(inpath: &PathBuf) -> Result<PathBuf> {
-    let dir = get_backup_dir()?;
-    let filename = inpath
-        .file_name()
-        .ok_or_else(|| anyhow!("failed to get filename"))?;
-    let path = dir.join(filename);
-    Ok(path)
 }
 
 fn is_backup_dir_exist() -> Result<bool> {
@@ -33,23 +25,26 @@ fn mk_backup_dir() -> Result<()> {
     Ok(())
 }
 
-fn rm_backup_file(inpath: &PathBuf) -> Result<()> {
-    let path = calc_backup_path(inpath)?;
-    if fs::exists(path.clone())? {
-        fs::remove_file(path)?;
-    }
-    Ok(())
+/* backup file */
+pub fn calc_backup_path(inpath: &PathBuf) -> Result<PathBuf> {
+    let dir = get_backup_dir()?;
+    let filename = inpath
+        .file_name()
+        .ok_or_else(|| anyhow!("failed to get filename"))?;
+    let path = dir.join(filename);
+    Ok(path)
 }
 
 pub fn backup(inpath: &PathBuf) -> Result<()> {
     mk_backup_dir()?;
-    rm_backup_file(inpath)?;
+    rm_backup(inpath)?;
     let path = calc_backup_path(inpath)?;
     let _ = fs::copy(inpath, path)?;
     Ok(())
 }
 
-pub fn list_backuped_files() -> Result<Vec<PathBuf>> {
+/* backup lifecycle */
+pub fn list_backuped() -> Result<Vec<PathBuf>> {
     if !is_backup_dir_exist()? {
         return Ok(vec![]);
     }
@@ -65,19 +60,25 @@ pub fn list_backuped_files() -> Result<Vec<PathBuf>> {
     Ok(ret)
 }
 
-pub fn remove_old_backups() -> Result<()> {
-    let dir = get_backup_dir()?;
+pub fn rm_old_backups() -> Result<()> {
+    let files = list_backuped()?;
     let one_day_ago = time::SystemTime::now() - time::Duration::from_secs(24 * 60 * 60);
 
-    for entry in fs::read_dir(dir)? {
-        let path = entry?.path();
-        if path.is_file() {
-            let metadata = fs::metadata(&path)?;
-            let created = metadata.created()?;
-            if created < one_day_ago {
-                fs::remove_file(path)?;
-            }
+    for file in files {
+        let meta = fs::metadata(&file)?;
+        let created = meta.created()?;
+
+        if created < one_day_ago {
+            fs::remove_file(file)?;
         }
+    }
+    Ok(())
+}
+
+fn rm_backup(inpath: &PathBuf) -> Result<()> {
+    let path = calc_backup_path(inpath)?;
+    if fs::exists(path.clone())? {
+        fs::remove_file(path)?;
     }
     Ok(())
 }
