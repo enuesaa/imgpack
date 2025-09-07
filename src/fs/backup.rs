@@ -31,6 +31,18 @@ pub fn backup(inpath: &PathBuf) -> Result<()> {
     Ok(())
 }
 
+pub fn list_backuped_files() -> Result<Vec<PathBuf>> {
+    let dir = get_backup_dir()?;
+    let mut ret = Vec::new();
+    for entry in fs::read_dir(dir)? {
+        let path = entry?.path();
+        if path.is_file() {
+            ret.push(path);
+        }
+    }
+    Ok(ret)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
