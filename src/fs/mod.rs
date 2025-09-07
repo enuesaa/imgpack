@@ -2,7 +2,7 @@ mod compressable;
 mod ext;
 mod filesize;
 mod list;
-mod original;
+mod backup;
 
 pub use compressable::Compressable;
 pub use compressable::Ext;

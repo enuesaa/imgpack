@@ -1,8 +1,8 @@
 use anyhow::Result;
 use std::path::PathBuf;
-use std::{collections::HashSet, fs};
+use std::fs;
 
-use crate::fs::{compressable::Compressable, original::calc_originalpath};
+use crate::fs::compressable::Compressable;
 
 pub fn list_compressables(path: &PathBuf) -> Result<Vec<Compressable>> {
     let files = list_files_in_dir(path)?;
@@ -29,40 +29,12 @@ fn list_files_in_dir(path: &PathBuf) -> Result<Vec<PathBuf>> {
 }
 
 fn filter_compress_target(files: Vec<PathBuf>) -> Vec<PathBuf> {
-    let images: Vec<PathBuf> = files
+    files
         .clone()
         .into_iter()
         .filter(|path| {
             if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
                 name.ends_with(".png") || name.ends_with(".jpg") || name.ends_with(".jpeg")
-            } else {
-                false
-            }
-        })
-        .collect();
-
-    let originals: HashSet<String> = images
-        .iter()
-        .filter_map(|path| {
-            path.file_name()
-                .and_then(|n| n.to_str())
-                .filter(|name| name.contains(".original."))
-                .map(|s| s.to_string())
-        })
-        .collect();
-
-    images
-        .into_iter()
-        .filter(|path| {
-            if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-                !originals.contains(&name.to_string())
-            } else {
-                false
-            }
-        })
-        .filter(|path| {
-            if let Ok(original) = calc_originalpath(path) {
-                !originals.contains(&original.file_name().unwrap().to_str().unwrap().to_string())
             } else {
                 false
             }

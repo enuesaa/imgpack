@@ -1,7 +1,10 @@
 use anyhow::{Ok, Result, bail};
-use std::{fmt, fs, path::PathBuf};
+use std::fmt;
+use std::path::PathBuf;
 
-use crate::fs::{ext::calc_ext, filesize::get_filesize, original::calc_backup_path, original::backup};
+use crate::fs::ext::calc_ext;
+use crate::fs::filesize::get_filesize;
+use crate::fs::backup;
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Ext {
@@ -32,27 +35,20 @@ impl Compressable {
         }
     }
 
-    // Example: `a.png`
-    pub fn initpath(&self) -> Result<PathBuf> {
-        if self.started {
-            bail!("compression started");
-        };
-        Ok(self.path.clone())
-    }
-
     pub fn setup_compression(&mut self) -> Result<()> {
         if self.started {
             bail!("compression started");
         };
         self.started = true;
-        Ok(backup(&self.inpath()?)?)
+
+        backup::backup(&self.inpath()?)
     }
 
     pub fn backuppath(&self) -> Result<PathBuf> {
-        calc_backup_path(&self.path)
+        backup::calc_backup_path(&self.path)
     }
 
-    // Example: `a.original.png`
+    // Example: `a.png`
     pub fn inpath(&self) -> Result<PathBuf> {
         Ok(self.path.clone())
     }
