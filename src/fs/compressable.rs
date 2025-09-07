@@ -1,7 +1,7 @@
 use anyhow::{Ok, Result, bail};
 use std::{fmt, fs, path::PathBuf};
 
-use crate::fs::{ext::calc_ext, filesize::get_filesize, original::calc_originalpath};
+use crate::fs::{ext::calc_ext, filesize::get_filesize, original::calc_originalpath, original::calc_backup_path};
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Ext {
@@ -49,6 +49,10 @@ impl Compressable {
         let from = self.path.clone();
         let to = self.inpath()?;
         Ok(fs::rename(from, to)?)
+    }
+
+    pub fn backuppath(&self) -> Result<PathBuf> {
+        calc_backup_path(&self.path)
     }
 
     // Example: `a.original.png`
