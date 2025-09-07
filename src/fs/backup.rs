@@ -2,6 +2,8 @@ use anyhow::{Result, anyhow};
 use std::env;
 use std::fs;
 use std::path::PathBuf;
+use std::time::Duration;
+use std::time::SystemTime;
 
 fn get_backup_dir() -> Result<PathBuf> {
     let home = env::home_dir().ok_or_else(|| anyhow!("failed to get home dir"))?;
@@ -41,6 +43,23 @@ pub fn list_backuped_files() -> Result<Vec<PathBuf>> {
         }
     }
     Ok(ret)
+}
+
+pub fn remove_old_backups() -> Result<()> {
+    let dir = get_backup_dir()?;
+    let one_day_ago = SystemTime::now() - Duration::from_secs(24 * 60 * 60);
+
+    for entry in fs::read_dir(dir)? {
+        let path = entry?.path();
+        if path.is_file() {
+            let metadata = fs::metadata(&path)?;
+            let created = metadata.created()?;
+            if created < one_day_ago {
+                fs::remove_file(path)?;
+            }
+        }
+    }
+    Ok(())
 }
 
 #[cfg(test)]

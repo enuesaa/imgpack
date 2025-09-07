@@ -45,11 +45,11 @@ fn filter_compress_target(files: Vec<PathBuf>, backuped: Vec<PathBuf>) -> Vec<Pa
 
     let originals: HashSet<String> = backuped
         .into_iter()
-        .filter_map(|path| 
+        .filter_map(|path| {
             path.file_name()
                 .and_then(|n| n.to_str())
                 .map(|s| s.to_string())
-        )
+        })
         .collect();
 
     images
@@ -75,10 +75,7 @@ mod tests {
             PathBuf::from("b.jpg"),
             PathBuf::from("c.png"),
         ];
-        let backuped = vec![
-            PathBuf::from("a.png"),
-            PathBuf::from("d.png"),
-        ];
+        let backuped = vec![PathBuf::from("a.png"), PathBuf::from("d.png")];
 
         let res = filter_compress_target(files, backuped);
 
