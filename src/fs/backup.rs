@@ -2,8 +2,7 @@ use anyhow::{Result, anyhow};
 use std::env;
 use std::fs;
 use std::path::PathBuf;
-use std::time::Duration;
-use std::time::SystemTime;
+use std::time;
 
 fn get_backup_dir() -> Result<PathBuf> {
     let home = env::home_dir().ok_or_else(|| anyhow!("failed to get home dir"))?;
@@ -11,42 +10,52 @@ fn get_backup_dir() -> Result<PathBuf> {
     Ok(dir)
 }
 
-pub fn calc_backup_path(file: &PathBuf) -> Result<PathBuf> {
+pub fn calc_backup_path(inpath: &PathBuf) -> Result<PathBuf> {
     let dir = get_backup_dir()?;
-    let filename = file
+    let filename = inpath
         .file_name()
         .ok_or_else(|| anyhow!("failed to get filename"))?;
     let path = dir.join(filename);
     Ok(path)
 }
 
-fn mk_backup_dir() -> Result<()> {
+fn is_backup_dir_exist() -> Result<bool> {
     let dir = get_backup_dir()?;
-    if let Ok(is) = fs::exists(dir.clone()) && is {
+    Ok(fs::exists(dir)?)
+}
+
+fn mk_backup_dir() -> Result<()> {
+    if is_backup_dir_exist()? {
         return Ok(());
     }
+    let dir = get_backup_dir()?;
     let _ = fs::create_dir(dir)?;
+    Ok(())
+}
+
+fn rm_backup_file(inpath: &PathBuf) -> Result<()> {
+    let path = calc_backup_path(inpath)?;
+    if fs::exists(path.clone())? {
+        fs::remove_file(path)?;
+    }
     Ok(())
 }
 
 pub fn backup(inpath: &PathBuf) -> Result<()> {
     mk_backup_dir()?;
-    let backup_path = calc_backup_path(inpath)?;
-    if let Ok(is) = fs::exists(backup_path.clone()) && is {
-        fs::remove_file(backup_path.clone())?;
-    }
-    let _ = fs::copy(inpath, backup_path)?;
+    rm_backup_file(inpath)?;
+    let path = calc_backup_path(inpath)?;
+    let _ = fs::copy(inpath, path)?;
     Ok(())
 }
 
 pub fn list_backuped_files() -> Result<Vec<PathBuf>> {
+    if !is_backup_dir_exist()? {
+        return Ok(vec![]);
+    }
     let dir = get_backup_dir()?;
     let mut ret = Vec::new();
 
-    let is = fs::exists(dir.clone());
-    if is.is_err() || is.is_ok_and(|v| !v) {
-        return Ok(ret);
-    }
     for entry in fs::read_dir(dir)? {
         let path = entry?.path();
         if path.is_file() {
@@ -58,7 +67,7 @@ pub fn list_backuped_files() -> Result<Vec<PathBuf>> {
 
 pub fn remove_old_backups() -> Result<()> {
     let dir = get_backup_dir()?;
-    let one_day_ago = SystemTime::now() - Duration::from_secs(24 * 60 * 60);
+    let one_day_ago = time::SystemTime::now() - time::Duration::from_secs(24 * 60 * 60);
 
     for entry in fs::read_dir(dir)? {
         let path = entry?.path();

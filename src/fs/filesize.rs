@@ -17,7 +17,7 @@ mod tests {
         let path = PathBuf::from("testdata/lakemountain.png");
         let filesize = get_filesize(&path);
         assert_eq!(filesize.unwrap(), 3157.0);
-        
+
         let path = PathBuf::from("testdata/lakemountain.jpg");
         let filesize = get_filesize(&path);
         assert_eq!(filesize.unwrap(), 632.0);

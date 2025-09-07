@@ -1,6 +1,6 @@
 use anyhow::{Ok, Result, bail};
-use std::{fmt, fs};
 use std::path::PathBuf;
+use std::{fmt, fs};
 
 use crate::fs::backup;
 use crate::fs::ext::calc_ext;
