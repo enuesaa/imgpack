@@ -10,18 +10,17 @@ pub fn pack_png(file: &Compressable) -> Result<()> {
     let inpath = file.inpath()?;
     let outpath = file.outpath()?;
 
-    let palette_size = 256; // 減色後の色数
-
     let img = image::open(inpath)?;
     let (width, height) = img.dimensions();
 
     // RGBAへ変換
     let rgba_pixels: Vec<u8> = img.to_rgba8().into_vec();
 
-    // NeuQuant で減色
+    // 減色
+    let palette_size = 256; // 減色後の色数
     let nq = NeuQuant::new(10, palette_size, &rgba_pixels);
 
-    // 各ピクセルをインデックス
+    // 各ピクセル
     let mut indexed_pixels = Vec::with_capacity((width * height) as usize);
     for i in 0..(width * height) {
         let offset = (i * 4) as usize;
@@ -57,5 +56,6 @@ pub fn pack_png(file: &Compressable) -> Result<()> {
 
     let optimized = oxipng::optimize_from_memory(&buf, &opts)?;
     std::fs::write(outpath, optimized)?;
+
     Ok(())
 }
