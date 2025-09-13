@@ -15,7 +15,7 @@ pub fn pack_png(file: &Compressable) -> Result<()> {
 
     let rgba_pixels: Vec<u8> = img.to_rgba8().into_vec();
 
-    let (indexed_pixels, palette) = extpng_quantize(&rgba_pixels, width, height);
+    let (indexed_pixels, palette) = extpng_quantize(width, height, &rgba_pixels);
     let buf = extpng_build_image(width, height, &indexed_pixels, &palette)?;
     let optimized = extpng_optimize(buf)?;
 
@@ -24,27 +24,26 @@ pub fn pack_png(file: &Compressable) -> Result<()> {
 }
 
 // 減色
-fn extpng_quantize(rgba_pixels: &[u8], width: u32, height: u32) -> (Vec<u8>, Vec<Rgba<u8>>) {
+fn extpng_quantize(width: u32, height: u32, rgba_pixels: &[u8]) -> (Vec<u8>, Vec<Rgba<u8>>) {
     let palette_size = 256; // 減色後の色数
 
     let nq = NeuQuant::new(10, palette_size, rgba_pixels);
     let mut indexed_pixels = Vec::with_capacity((width * height) as usize);
 
-    for i in 0..(width * height) {
-        let offset = (i * 4) as usize;
-        let pixel = &rgba_pixels[offset..offset + 4];
+    for pixel in rgba_pixels.chunks_exact(4) {
         let idx = if pixel[3] == 0 { 0 } else { nq.index_of(pixel) } as u8;
         indexed_pixels.push(idx);
     }
 
-    let palette_bytes = nq.color_map_rgb();
-    let mut palette = Vec::with_capacity(palette_size);
-    for i in 0..palette_size {
-        let r = palette_bytes[i * 3];
-        let g = palette_bytes[i * 3 + 1];
-        let b = palette_bytes[i * 3 + 2];
-        palette.push(Rgba([r, g, b, 255]));
-    }
+    // パレット
+    let palette_bytes_arr = nq.color_map_rgba();
+    let palette: Vec<Rgba<u8>> = palette_bytes_arr
+        .chunks_exact(4)
+        .map(|color| {
+            let [r, g, b, a]: [u8; 4] = color.try_into().unwrap();
+            Rgba([r, g, b, a])
+        })
+        .collect();
 
     (indexed_pixels, palette)
 }
