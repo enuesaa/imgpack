@@ -1,6 +1,6 @@
-use anyhow::Result;
+use anyhow::{Result, anyhow};
 use color_quant::NeuQuant;
-use image::{GenericImageView, ImageBuffer, Rgba, RgbaImage};
+use image::{DynamicImage, GenericImageView, ImageBuffer, Rgba, RgbaImage};
 use oxipng::Options;
 use std::io::Cursor;
 
@@ -10,13 +10,11 @@ pub fn pack_png(file: &Compressable) -> Result<()> {
     let inpath = file.inpath()?;
     let outpath = file.outpath()?;
 
-    let img = image::open(inpath)?;
-    let (width, height) = img.dimensions();
+    let original = image::open(inpath)?;
+    let pixels: Vec<u8> = original.to_rgba8().into_vec();
 
-    let rgba_pixels: Vec<u8> = img.to_rgba8().into_vec();
-
-    let (indexed_pixels, palette) = extpng_quantize(&rgba_pixels);
-    let buf = extpng_build_image(width, height, &indexed_pixels, &palette)?;
+    let (indexed_pixels, palette) = extpng_quantize(&pixels);
+    let buf = extpng_build(original, &indexed_pixels, &palette)?;
     let optimized = extpng_optimize(buf)?;
 
     std::fs::write(outpath, optimized)?;
@@ -24,11 +22,11 @@ pub fn pack_png(file: &Compressable) -> Result<()> {
 }
 
 // 減色
-fn extpng_quantize(rgba_pixels: &[u8]) -> (Vec<u8>, Vec<Rgba<u8>>) {
+fn extpng_quantize(pixels: &[u8]) -> (Vec<u8>, Vec<Rgba<u8>>) {
     let palette_size = 256; // 減色後の色数
-    let nq = NeuQuant::new(10, palette_size, rgba_pixels);
+    let nq = NeuQuant::new(10, palette_size, pixels);
 
-    let indexed_pixels: Vec<u8> = rgba_pixels
+    let indexed: Vec<u8> = pixels
         .chunks_exact(4)
         .map(|pixel| {
             // 透明度は無視
@@ -49,19 +47,22 @@ fn extpng_quantize(rgba_pixels: &[u8]) -> (Vec<u8>, Vec<Rgba<u8>>) {
         })
         .collect();
 
-    (indexed_pixels, palette)
+    (indexed, palette)
 }
 
-fn extpng_build_image(width: u32, height: u32, indexed_pixels: &[u8], palette: &[Rgba<u8>]) -> Result<Vec<u8>> {
-    let mut tmp_img: RgbaImage = ImageBuffer::new(width, height);
-    for (i, idx) in indexed_pixels.iter().enumerate() {
-        let x = (i as u32) % width;
-        let y = (i as u32) / width;
-        tmp_img.put_pixel(x, y, palette[*idx as usize]);
-    }
+// indexed を palette の色で置き換え
+fn extpng_build(original: DynamicImage, indexed: &[u8], palette: &[Rgba<u8>]) -> Result<Vec<u8>> {
+    let pixels: Vec<u8> = indexed
+        .iter()
+        .flat_map(|&idx| palette[idx as usize].0)
+        .collect();
+
+    let (width, height) = original.dimensions();
+    let img: RgbaImage = ImageBuffer::from_vec(width, height, pixels)
+        .ok_or_else(|| anyhow!("failed to map pixels"))?;
 
     let mut buf = Vec::new();
-    tmp_img.write_to(&mut Cursor::new(&mut buf), image::ImageFormat::Png)?;
+    img.write_to(&mut Cursor::new(&mut buf), image::ImageFormat::Png)?;
     Ok(buf)
 }
 
