@@ -1,6 +1,8 @@
 # imgpack
 Prototype. A CLI tool to compress images
 
+[![ci](https://github.com/enuesaa/imgpack/actions/workflows/ci.yml/badge.svg)](https://github.com/enuesaa/imgpack/actions/workflows/ci.yml)
+
 ## モチベーション
 - 画像ファイル (png, jpeg) を圧縮するCLIツール
 - 類似のものがいくらでもあるが、題材としてちょうどいいので自作してみたい
