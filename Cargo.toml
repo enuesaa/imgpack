@@ -4,10 +4,10 @@ version = "0.1.6"
 edition = "2024"
 
 [dependencies]
-anyhow = "1.0.98"
-clap = { version = "4.5.45", features = ["derive", "cargo"] }
-clap_derive = "4.5.45"
-color_quant = "1.1.0"
-image = "0.25.6"
-oxipng = "9.1.5"
+anyhow = "1.0.104"
+clap = { version = "4.6.9", features = ["derive", "cargo"] }
+clap_derive = "4.6.9"
+color_quant = "2.0.0"
+image = "0.25.10"
+oxipng = "10.2.1"
 temp-env = "0.3.6"
