@@ -22,8 +22,8 @@ compress
 
 ```bash
 $ imgpack ./testdata
-lakemountain.jpg ... size reduced by 36% (632KB -> 399KB)
-lakemountain.png ... size reduced by 74% (3157KB -> 815KB)
+lakemountain.jpg ... size reduced by 68% (632KB -> 200KB)
+lakemountain.png ... size reduced by 75% (3157KB -> 776KB)
 ```
 
 ## モチベーション
